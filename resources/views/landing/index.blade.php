@@ -2,7 +2,7 @@
 <html lang="tr" data-bs-theme="dark" style="scroll-behavior: smooth">
 <head>
     <meta charset="utf-8"/>
-    <title>Reserup — İşletmeniz İçin Akıllı Randevu Sistemi | Kıbrıs</title>
+    <title>BooKıbrıs — İşletmeniz İçin Akıllı Randevu Sistemi | Kıbrıs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content="Berber, kuaför, güzellik salonu ve tüm randevulu işletmeler için online randevu, WhatsApp hatırlatma, gelir-gider takibi ve müşteri yönetimi. Kıbrıs'ın randevu sistemi."/>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
@@ -11,14 +11,14 @@
 
     {{-- Sosyal paylasim (Open Graph / Twitter) --}}
     <meta property="og:type" content="website"/>
-    <meta property="og:site_name" content="Reserup"/>
-    <meta property="og:title" content="Reserup — İşletmeniz İçin Akıllı Randevu Sistemi"/>
+    <meta property="og:site_name" content="BooKıbrıs"/>
+    <meta property="og:title" content="BooKıbrıs — İşletmeniz İçin Akıllı Randevu Sistemi"/>
     <meta property="og:description" content="Online randevu, WhatsApp hatırlatma, gelir-gider takibi ve müşteri yönetimi tek panelde. 14 gün ücretsiz deneyin."/>
     <meta property="og:url" content="{{ url('/') }}"/>
     <meta property="og:image" content="{{ asset('images/og-cover.png') }}"/>
     <meta property="og:locale" content="tr_TR"/>
     <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Reserup — İşletmeniz İçin Akıllı Randevu Sistemi"/>
+    <meta name="twitter:title" content="BooKıbrıs — İşletmeniz İçin Akıllı Randevu Sistemi"/>
     <meta name="twitter:description" content="Online randevu, WhatsApp hatırlatma ve müşteri yönetimi tek panelde. 14 gün ücretsiz."/>
     <meta name="twitter:image" content="{{ asset('images/og-cover.png') }}"/>
     @vite(['resources/scss/app.scss', 'resources/scss/icons.scss'])
@@ -286,7 +286,7 @@
 {{-- ── Navbar ──────────────────────────────────────────────── --}}
 <nav class="lp-nav py-3" id="lp-nav">
     <div class="container d-flex align-items-center justify-content-between">
-        <a class="fs-24 fw-bold text-white text-decoration-none" href="#">reser<span style="color:var(--lp-primary-2)">up</span></a>
+        <a class="fs-24 fw-bold text-white text-decoration-none" href="#">Boo<span style="color:var(--lp-primary-2)">Kıbrıs</span></a>
 
         <div class="d-none d-lg-flex align-items-center gap-4">
             <a class="nav-link" href="#ozellikler">Özellikler</a>
@@ -354,7 +354,7 @@
                     <span class="mockup-dot" style="background:#ff5f57"></span>
                     <span class="mockup-dot" style="background:#febc2e"></span>
                     <span class="mockup-dot" style="background:#28c840"></span>
-                    <span class="fs-12 lp-muted ms-2">reserup.com/demo-berber/panel/takvim</span>
+                    <span class="fs-12 lp-muted ms-2">bookibris.com/demo-berber/panel/takvim</span>
                 </div>
                 <div class="p-3 p-md-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -545,7 +545,7 @@
                 $faqs = [
                     ['q' => 'Kurulum için teknik bilgi gerekiyor mu?', 'a' => 'Hayır. Demo talebinizden sonra işletmenizi biz kuruyoruz; size sadece hizmet ve personel bilgilerinizi girmek kalıyor. Dilerseniz onu da birlikte yapıyoruz.'],
                     ['q' => 'WhatsApp mesajları nasıl gönderiliyor?', 'a' => 'Resmi WhatsApp Business API üzerinden gönderilir. Kendi numaranızla, onay ve hatırlatma mesajları otomatik gider.'],
-                    ['q' => 'Müşterilerim nasıl randevu alacak?', 'a' => 'Size özel linkiniz olur (örn. reserup.com/isletmeniz). Bu linki Instagram, Google ve WhatsApp durumunuzda paylaşırsınız; müşteri hizmet, personel ve saati seçip randevusunu alır.'],
+                    ['q' => 'Müşterilerim nasıl randevu alacak?', 'a' => 'Size özel linkiniz olur (örn. bookibris.com/isletmeniz). Bu linki Instagram, Google ve WhatsApp durumunuzda paylaşırsınız; müşteri hizmet, personel ve saati seçip randevusunu alır.'],
                     ['q' => 'Deneme süresi bitince ne olur?', 'a' => 'Dilediğiniz planı seçip kartla veya havale/EFT ile ödersiniz. Verileriniz aynen korunur.'],
                     ['q' => 'Verilerim güvende mi?', 'a' => 'Her işletmenin verisi birbirinden tamamen izole tutulur, şifreler ve API anahtarları şifrelenerek saklanır. Verileriniz sadece size aittir.'],
                     ['q' => 'İptal edersem ne olur?', 'a' => 'Taahhüt yok. İstediğiniz zaman iptal edebilirsiniz; dönem sonuna kadar sistem çalışmaya devam eder.'],
@@ -641,7 +641,7 @@
     <div class="container">
         <div class="row g-4 align-items-center">
             <div class="col-md-6">
-                <a class="fs-24 fw-bold text-white text-decoration-none" href="#">reser<span style="color:var(--lp-primary-2)">up</span></a>
+                <a class="fs-24 fw-bold text-white text-decoration-none" href="#">Boo<span style="color:var(--lp-primary-2)">Kıbrıs</span></a>
                 <p class="lp-muted mb-0 mt-2 fs-14">İşletmeniz için akıllı randevu sistemi — Kıbrıs 🇨🇾</p>
             </div>
             <div class="col-md-6 text-md-end">
@@ -656,7 +656,7 @@
                     <a href="{{ route('legal.distance-sales') }}" class="lp-muted text-decoration-none fs-13">Mesafeli Satış</a>
                     <a href="{{ route('legal.cookies') }}" class="lp-muted text-decoration-none fs-13">Çerez Politikası</a>
                 </div>
-                <p class="lp-muted fs-13 mb-0">© {{ date('Y') }} Reserup. Tüm hakları saklıdır.</p>
+                <p class="lp-muted fs-13 mb-0">© {{ date('Y') }} BooKıbrıs. Tüm hakları saklıdır.</p>
             </div>
         </div>
     </div>

@@ -71,7 +71,7 @@ class SettingsController extends Controller
         $result = $whatsapp->send(
             $business,
             $data['test_phone'],
-            'Reserup test mesajı — WhatsApp entegrasyonunuz çalışıyor! ✅',
+            'BooKıbrıs test mesajı — WhatsApp entegrasyonunuz çalışıyor! ✅',
             'system',
         );
 

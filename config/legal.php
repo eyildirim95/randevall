@@ -12,7 +12,7 @@
 return [
     'updated_at' => '2026-07-05',
 
-    // Ticari ünvan (ör. "Reserup Yazılım Ltd.")
+    // Ticari ünvan (ör. "BooKıbrıs Yazılım Ltd.")
     'company' => env('LEGAL_COMPANY', ''),
 
     // Adres
@@ -25,7 +25,7 @@ return [
     'tax_office' => env('LEGAL_TAX_OFFICE', ''),
 
     // İletişim
-    'email' => env('LEGAL_EMAIL', 'bilgi@reserup.com'),
+    'email' => env('LEGAL_EMAIL', 'bilgi@bookibris.com'),
     'phone' => env('LEGAL_PHONE', ''),
 
     // KEP adresi (varsa)

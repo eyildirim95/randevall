@@ -1,4 +1,4 @@
-# Reserup — Yayın (Production) Hazırlık Rehberi
+# BooKıbrıs — Yayın (Production) Hazırlık Rehberi
 
 Bu doküman projeyi ilk kez canlıya alırken izlenecek adımları ve **zamanlanmış görev / kuyruk** kurulumunu içerir. Adımları sırayla uygulayın.
 
@@ -56,7 +56,7 @@ Her dakika çalışan bir görev:
 # Yönetici PowerShell'de (yolları kendinize göre düzenleyin):
 $action  = New-ScheduledTaskAction -Execute "php" -Argument "artisan schedule:run" -WorkingDirectory "C:\path\to\reserup"
 $trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Minutes 1)
-Register-ScheduledTask -TaskName "Reserup Scheduler" -Action $action -Trigger $trigger -RunLevel Highest
+Register-ScheduledTask -TaskName "BooKıbrıs Scheduler" -Action $action -Trigger $trigger -RunLevel Highest
 ```
 
 `routes/console.php` içindeki tanımlı işler:

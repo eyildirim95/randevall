@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
-    <title>@yield('code') — {{ config('app.name', 'Reserup') }}</title>
+    <title>@yield('code') — {{ config('app.name', 'BooKıbrıs') }}</title>
     <style>
         * { box-sizing: border-box; }
         body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
@@ -24,7 +24,7 @@
 </head>
 <body>
     <div class="box">
-        <a href="{{ url('/') }}" class="brand">reser<span>up</span></a>
+        <a href="{{ url('/') }}" class="brand">Boo<span>Kıbrıs</span></a>
         <p class="code">@yield('code')</p>
         <h1>@yield('heading')</h1>
         <p>@yield('message')</p>

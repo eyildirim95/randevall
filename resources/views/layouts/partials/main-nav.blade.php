@@ -9,11 +9,11 @@
     <div class="logo-box">
         <a href="{{ $homeUrl }}" class="logo-dark">
             <span class="logo-sm fw-bold fs-22 text-primary">R</span>
-            <span class="logo-lg fw-bold fs-22 text-dark">reser<span class="text-primary">up</span></span>
+            <span class="logo-lg fw-bold fs-22 text-dark">Boo<span class="text-primary">Kıbrıs</span></span>
         </a>
         <a href="{{ $homeUrl }}" class="logo-light">
             <span class="logo-sm fw-bold fs-22 text-primary">R</span>
-            <span class="logo-lg fw-bold fs-22 text-white">reser<span class="text-primary">up</span></span>
+            <span class="logo-lg fw-bold fs-22 text-white">Boo<span class="text-primary">Kıbrıs</span></span>
         </a>
     </div>
 

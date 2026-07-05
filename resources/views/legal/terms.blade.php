@@ -4,13 +4,13 @@
 @section('content')
 <p>
     Bu Kullanım Koşulları ("Koşullar"), @include('legal.partials.field', ['key' => 'company', 'label' => 'Şirket Ünvanı'])
-    ("Reserup", "biz") tarafından sunulan {{ config('app.name') }} randevu yönetim platformunun ("Hizmet")
+    ("BooKıbrıs", "biz") tarafından sunulan {{ config('app.name') }} randevu yönetim platformunun ("Hizmet")
     kullanımına ilişkin şartları düzenler. Hizmete kayıt olarak veya kullanarak bu Koşulları kabul etmiş sayılırsınız.
 </p>
 
 <h2>1. Hizmetin Tanımı</h2>
 <p>
-    Reserup; işletmelerin online randevu alması, müşteri ve personel yönetimi, hatırlatma mesajları,
+    BooKıbrıs; işletmelerin online randevu alması, müşteri ve personel yönetimi, hatırlatma mesajları,
     gelir-gider takibi ve benzeri özellikler sunan bulut tabanlı (SaaS) bir yazılım hizmetidir.
     Hizmet abonelik modeliyle sunulur ve deneme süresi içerir.
 </p>
@@ -20,7 +20,7 @@
     <li>Kayıt sırasında verdiğiniz bilgilerin doğru, güncel ve eksiksiz olduğunu taahhüt edersiniz.</li>
     <li>Hesap güvenliğinizden (şifre dahil) ve hesabınız altında gerçekleşen işlemlerden siz sorumlusunuz.</li>
     <li>İşletmeniz aracılığıyla topladığınız müşteri verilerinin işlenmesinde veri sorumlusu sizsiniz;
-        Reserup bu verileri sizin adınıza işleyen konumundadır (bkz. Gizlilik &amp; KVKK).</li>
+        BooKıbrıs bu verileri sizin adınıza işleyen konumundadır (bkz. Gizlilik &amp; KVKK).</li>
 </ul>
 
 <h2>3. Abonelik, Deneme ve Ödeme</h2>
@@ -38,7 +38,7 @@
 
 <h2>5. Mesajlaşma (WhatsApp / E-posta)</h2>
 <p>Müşterilerinize gönderilen hatırlatma ve bilgilendirme mesajlarının içeriğinden ve ilgili kişilerin
-    onayını almış olmaktan siz sorumlusunuz. Reserup yalnızca teknik altyapıyı sağlar.</p>
+    onayını almış olmaktan siz sorumlusunuz. BooKıbrıs yalnızca teknik altyapıyı sağlar.</p>
 
 <h2>6. Hizmet Sürekliliği</h2>
 <p>Hizmeti kesintisiz sunmak için makul çaba gösteririz; ancak bakım, güncelleme veya öngörülemeyen

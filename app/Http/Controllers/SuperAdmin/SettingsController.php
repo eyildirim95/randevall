@@ -78,7 +78,7 @@ class SettingsController extends Controller
 
         $result = $whatsapp->sendPlatformTest(
             $data['test_phone'],
-            'Reserup platform testi — merkezi WhatsApp API bağlantınız çalışıyor! ✅',
+            'BooKıbrıs platform testi — merkezi WhatsApp API bağlantınız çalışıyor! ✅',
         );
 
         return $result->success

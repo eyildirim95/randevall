@@ -20,7 +20,7 @@ class DemoRequestReceivedMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reserup — Yeni Demo Talebi: '.$this->demoRequest->name,
+            subject: 'BooKıbrıs — Yeni Demo Talebi: '.$this->demoRequest->name,
         );
     }
 

@@ -148,7 +148,7 @@
                         <div class="col-12">
                             <div class="alert alert-info py-2 mb-0">
                                 <i class="ri-information-line me-1"></i>
-                                WhatsApp gönderimi Reserup'un merkezi altyapısı üzerinden yapılır; API kurulumu gerekmez.
+                                WhatsApp gönderimi BooKıbrıs'un merkezi altyapısı üzerinden yapılır; API kurulumu gerekmez.
                                 @if($business->plan && $business->plan->whatsapp_quota_monthly > 0)
                                     Planınıza dahil aylık kota: <strong>{{ $business->plan->whatsapp_quota_monthly }}</strong> mesaj
                                     (bu ay kullanılan: <strong>{{ app(\App\Services\Messaging\WhatsAppManager::class)->usedThisMonth($business) }}</strong>).

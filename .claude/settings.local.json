@@ -46,7 +46,18 @@
       "Bash(curl -s --max-time 20 \"http://localhost:8100/\")",
       "Bash(curl -s --max-time 20 \"http://localhost:8100/mesafeli-satis-sozlesmesi\")",
       "Bash(curl -s --max-time 20 \"http://localhost:8100/kayit\")",
-      "Bash(git -c user.name=Reserup -c user.email=dev@reserup.com commit -q -m 'Yayin hazirligi: yasal sayfalar, hata sayfalari, e-posta dogrulama, prod config, bug fix *)"
+      "Bash(git -c user.name=Reserup -c user.email=dev@reserup.com commit -q -m 'Yayin hazirligi: yasal sayfalar, hata sayfalari, e-posta dogrulama, prod config, bug fix *)",
+      "Bash(php artisan tinker '--execute= *)",
+      "Bash(curl -s --max-time 20 \"http://localhost:8100/kullanim-kosullari\")",
+      "Bash(curl -s --max-time 20 \"http://localhost:8100/yok-404\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 20 \"http://localhost:8100/\")",
+      "Bash(grep -aoE \"Boo.{0,60}Kıbrıs|Kıbrıs</span>|bookibris\\\\.com[^\\\\\"< ]*\")",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' --max-time 25 http://localhost:8100/)",
+      "Bash(echo \"durum: $\\(curl -s -o /dev/null -w '%{http_code}' --max-time 25 http://localhost:8100/\\)\")",
+      "Bash(curl -s --max-time 25 \"http://localhost:8100/\")",
+      "Bash(grep -aoE \"Boo.{0,55}Kıbrıs</span>|bookibris\\\\.com/[a-z-]+\")",
+      "Bash(curl -s --max-time 25 \"http://localhost:8100/cerez-politikasi\")",
+      "Bash(git -c user.name=BooKibris -c user.email=dev@bookibris.com commit -q -m 'Rebrand: Reserup -> BooKibris \\(domain bookibris.com\\) *)"
     ]
   }
 }

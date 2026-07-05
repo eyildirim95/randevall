@@ -7,7 +7,7 @@
             <div class="card-body px-3 py-5">
                 <div class="mx-auto mb-4 text-center auth-logo">
                     <a href="{{ route('landing') }}" class="fw-bold fs-28 text-decoration-none">
-                        <span class="text-dark">reser</span><span class="text-primary">up</span>
+                        <span class="text-dark">Boo</span><span class="text-primary">Kıbrıs</span>
                     </a>
                 </div>
 

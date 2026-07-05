@@ -1,4 +1,4 @@
-# Reserup — Multi-Tenant Randevu Sistemi
+# BooKıbrıs — Multi-Tenant Randevu Sistemi
 
 Kıbrıs pazarı için randevuyla çalışan işletmelere (berber, kuaför, güzellik salonu, klinik...) yönelik SaaS randevu yönetim sistemi. Laravel 13 + MySQL + Bootstrap 5 (Lahomes admin teması).
 
@@ -40,8 +40,8 @@ php artisan schedule:work    # gelistirme
 
 | Rol | E-posta | Şifre |
 |---|---|---|
-| Süper Admin | admin@reserup.com | admin123! |
-| İşletme Sahibi | demo@reserup.com | demo123! |
+| Süper Admin | admin@bookibris.com | admin123! |
+| İşletme Sahibi | demo@bookibris.com | demo123! |
 
 - İşletme paneli: `/demo-berber/panel`
 - Online rezervasyon: `/demo-berber`

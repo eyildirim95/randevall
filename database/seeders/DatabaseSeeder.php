@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
     {
         // ── Super admin ─────────────────────────────────────────
         $admin = User::query()->firstOrCreate(
-            ['email' => 'admin@reserup.com'],
-            ['name' => 'Reserup Admin', 'password' => Hash::make('admin123!')],
+            ['email' => 'admin@bookibris.com'],
+            ['name' => 'BooKıbrıs Admin', 'password' => Hash::make('admin123!')],
         );
         $admin->forceFill(['is_super_admin' => true, 'email_verified_at' => now()])->save();
 
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
         }
 
         // ── Sistem ayarlari ─────────────────────────────────────
-        SystemSetting::set('notification_email', 'admin@reserup.com');
+        SystemSetting::set('notification_email', 'admin@bookibris.com');
 
         // Merkezi WhatsApp: gelistirmede log saglayicisi
         if (! SystemSetting::get('whatsapp_provider')) {
@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
             'slug' => 'demo-berber',
             'sector' => 'Berber',
             'phone' => '+90 533 000 00 00',
-            'email' => 'demo@reserup.com',
+            'email' => 'demo@bookibris.com',
             'address' => 'Atatürk Caddesi No: 1',
             'city' => 'Girne',
             'description' => 'Girne\'nin merkezinde modern erkek kuaförü.',
@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
         $business->save();
 
         $owner = User::query()->firstOrCreate(
-            ['email' => 'demo@reserup.com'],
+            ['email' => 'demo@bookibris.com'],
             ['name' => 'Demo İşletmeci', 'phone' => '+90 533 000 00 00', 'password' => Hash::make('demo123!')],
         );
         $owner->forceFill(['email_verified_at' => now()])->save();
@@ -221,7 +221,7 @@ class DatabaseSeeder extends Seeder
         // Ornek not
         $note = new Note([
             'title' => 'Hoş geldiniz!',
-            'content' => 'Reserup demo işletmesine hoş geldiniz. Bu panelden randevularınızı, müşterilerinizi ve gelir-giderinizi yönetebilirsiniz.',
+            'content' => 'BooKıbrıs demo işletmesine hoş geldiniz. Bu panelden randevularınızı, müşterilerinizi ve gelir-giderinizi yönetebilirsiniz.',
             'color' => 'info',
             'is_pinned' => true,
         ]);

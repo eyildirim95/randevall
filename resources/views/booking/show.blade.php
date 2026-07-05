@@ -121,7 +121,7 @@
         </div>
 
         <p class="text-center text-muted fs-13">
-            Altyapı: <a href="{{ route('landing') }}" class="fw-semibold text-decoration-none">reser<span class="text-primary">up</span></a>
+            Altyapı: <a href="{{ route('landing') }}" class="fw-semibold text-decoration-none">Boo<span class="text-primary">Kıbrıs</span></a>
         </p>
     </div>
 @endsection

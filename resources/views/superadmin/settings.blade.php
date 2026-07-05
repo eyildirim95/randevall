@@ -11,7 +11,7 @@
                     <div class="card-body row g-3">
                         <div class="col-md-6">
                             <label class="form-label">Bildirim E-postası</label>
-                            <input type="email" name="notification_email" class="form-control" value="{{ old('notification_email', $settings['notification_email']) }}" placeholder="admin@reserup.com">
+                            <input type="email" name="notification_email" class="form-control" value="{{ old('notification_email', $settings['notification_email']) }}" placeholder="admin@bookibris.com">
                             <small class="text-muted">Demo talepleri buraya bildirilir.</small>
                         </div>
                         <div class="col-md-3">

@@ -30,7 +30,7 @@
 <body>
     <nav class="legal-nav">
         <div class="legal-wrap">
-            <a href="{{ route('landing') }}" class="brand">reser<span>up</span></a>
+            <a href="{{ route('landing') }}" class="brand">Boo<span>Kıbrıs</span></a>
         </div>
     </nav>
 

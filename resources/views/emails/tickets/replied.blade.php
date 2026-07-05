@@ -11,5 +11,5 @@
 Yanıtla
 </x-mail::button>
 
-Reserup
+BooKıbrıs
 </x-mail::message>
