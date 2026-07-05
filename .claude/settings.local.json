@@ -41,7 +41,12 @@
       "Bash(git --version)",
       "Bash(git init *)",
       "Bash(git add *)",
-      "Bash(git -c user.name=Reserup -c user.email=dev@reserup.com commit -q -m 'Initial commit: Reserup randevu SaaS \\(yayin hazirligi\\) *)"
+      "Bash(git -c user.name=Reserup -c user.email=dev@reserup.com commit -q -m 'Initial commit: Reserup randevu SaaS \\(yayin hazirligi\\) *)",
+      "Bash(curl -s --max-time 20 \"http://localhost:8100/bulunmayan-404-test\")",
+      "Bash(curl -s --max-time 20 \"http://localhost:8100/\")",
+      "Bash(curl -s --max-time 20 \"http://localhost:8100/mesafeli-satis-sozlesmesi\")",
+      "Bash(curl -s --max-time 20 \"http://localhost:8100/kayit\")",
+      "Bash(git -c user.name=Reserup -c user.email=dev@reserup.com commit -q -m 'Yayin hazirligi: yasal sayfalar, hata sayfalari, e-posta dogrulama, prod config, bug fix *)"
     ]
   }
 }

@@ -171,7 +171,9 @@ class BookingService
             return;
         }
 
+        // Yalnizca kotayi tuketen randevular sayilir (iptal/gelmedi haric)
         $count = Appointment::query()
+            ->blocking()
             ->whereBetween('starts_at', [$startsAt->copy()->startOfMonth(), $startsAt->copy()->endOfMonth()])
             ->count();
 
@@ -311,11 +313,14 @@ class BookingService
             return Customer::query()->findOrFail($data['customer_id']);
         }
 
-        $phone = preg_replace('/[^\d+]/', '', $data['customer_phone'] ?? '');
+        $rawPhone = trim($data['customer_phone'] ?? '');
 
-        if (! $phone) {
+        if ($rawPhone === '') {
             throw ValidationException::withMessages(['customer_phone' => 'Telefon numarası gerekli.']);
         }
+
+        // E.164'e normalize et: 0533.., +90533.., 90533.. ayni musteriye esler (mukerrer kayit onlenir)
+        $phone = \App\Services\Messaging\PhoneNumber::e164($rawPhone);
 
         $customer = Customer::query()->where('phone', $phone)->first();
 

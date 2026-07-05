@@ -114,17 +114,19 @@ class BookingController extends Controller
             'preferred_date' => ['required', 'date', 'after_or_equal:today'],
         ]);
 
+        $normalizedPhone = \App\Services\Messaging\PhoneNumber::e164($data['customer_phone']);
+
         // Ayni telefon ayni gun icin tek kayit
         $exists = \App\Models\WaitingListEntry::query()
             ->waiting()
-            ->where('customer_phone', preg_replace('/[^\d+]/', '', $data['customer_phone']))
+            ->where('customer_phone', $normalizedPhone)
             ->whereDate('preferred_date', $data['preferred_date'])
             ->exists();
 
         if (! $exists) {
             $entry = new \App\Models\WaitingListEntry([
                 ...$data,
-                'customer_phone' => preg_replace('/[^\d+]/', '', $data['customer_phone']),
+                'customer_phone' => $normalizedPhone,
             ]);
             $entry->business_id = $business->id;
             $entry->save();

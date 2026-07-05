@@ -22,6 +22,36 @@ Route::post('/demo-talebi', [DemoRequestController::class, 'store'])
 
 /*
 |--------------------------------------------------------------------------
+| Yasal sayfalar (KVKK, kosullar, mesafeli satis, cerez)
+|--------------------------------------------------------------------------
+*/
+Route::view('/kullanim-kosullari', 'legal.terms')->name('legal.terms');
+Route::view('/gizlilik-politikasi', 'legal.privacy')->name('legal.privacy');
+Route::view('/mesafeli-satis-sozlesmesi', 'legal.distance-sales')->name('legal.distance-sales');
+Route::view('/cerez-politikasi', 'legal.cookies')->name('legal.cookies');
+
+// Basit sitemap (landing + yasal sayfalar)
+Route::get('/sitemap.xml', function () {
+    $urls = [
+        route('landing'),
+        route('legal.terms'),
+        route('legal.privacy'),
+        route('legal.distance-sales'),
+        route('legal.cookies'),
+    ];
+
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n"
+        .'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
+    foreach ($urls as $url) {
+        $xml .= '  <url><loc>'.e($url).'</loc></url>'."\n";
+    }
+    $xml .= '</urlset>';
+
+    return response($xml, 200, ['Content-Type' => 'application/xml']);
+})->name('sitemap');
+
+/*
+|--------------------------------------------------------------------------
 | Kimlik dogrulama (tek giris noktasi)
 |--------------------------------------------------------------------------
 */
@@ -39,6 +69,22 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::post('/cikis', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
+
+/*
+|--------------------------------------------------------------------------
+| E-posta dogrulama (soft — panel erisimini engellemez)
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
+    Route::get('/e-posta/dogrula', [\App\Http\Controllers\Auth\EmailVerificationController::class, 'notice'])
+        ->name('verification.notice');
+    Route::get('/e-posta/dogrula/{id}/{hash}', [\App\Http\Controllers\Auth\EmailVerificationController::class, 'verify'])
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
+    Route::post('/e-posta/dogrula/tekrar-gonder', [\App\Http\Controllers\Auth\EmailVerificationController::class, 'resend'])
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
+});
 
 /*
 |--------------------------------------------------------------------------

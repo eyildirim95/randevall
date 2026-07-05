@@ -72,7 +72,10 @@
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="terms" name="terms" value="1" required>
                                 <label class="form-check-label fs-13 text-muted" for="terms">
-                                    Kullanım koşullarını ve kişisel verilerimin işlenmesini kabul ediyorum.
+                                    <a href="{{ route('legal.terms') }}" target="_blank">Kullanım Koşulları</a>’nı,
+                                    <a href="{{ route('legal.privacy') }}" target="_blank">KVKK Aydınlatma Metni</a>’ni ve
+                                    <a href="{{ route('legal.distance-sales') }}" target="_blank">Mesafeli Satış Sözleşmesi</a>’ni
+                                    okudum, kabul ediyorum.
                                 </label>
                             </div>
                         </div>

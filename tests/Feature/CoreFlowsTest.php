@@ -184,6 +184,55 @@ class CoreFlowsTest extends TestCase
         ])->assertUnprocessable()->assertJsonValidationErrors(['starts_at']);
     }
 
+    public function test_cancelled_appointments_do_not_count_toward_monthly_limit(): void
+    {
+        [$business, $owner, $staff, $service] = $this->makeBusiness('salon-limit', [
+            'max_appointments_per_month' => 1,
+        ]);
+
+        $appt = $this->makeAppointment($business, $staff, $service, now()->addDay()->setTime(10, 0));
+        $appt->forceFill(['status' => AppointmentStatus::Cancelled])->save();
+
+        Tenancy::forget();
+
+        // Iptal edilen randevu kotayi tuketmemeli → yeni randevu olusabilmeli
+        $this->actingAs($owner)->postJson("/{$business->slug}/panel/randevular", [
+            'customer_name' => 'Yeni Musteri',
+            'customer_phone' => '+905331119977',
+            'service_id' => $service->id,
+            'staff_id' => $staff->id,
+            'starts_at' => now()->addDay()->setTime(14, 0)->format('Y-m-d H:i:s'),
+        ])->assertRedirect();
+    }
+
+    public function test_phone_variants_resolve_to_same_customer(): void
+    {
+        [$business, , $staff, $service] = $this->makeBusiness('salon-phone');
+        $date = now()->addDays(2)->toDateString();
+
+        Tenancy::forget();
+
+        // Ayni numaranin iki farkli yazimi tek musteriye eslemelidir
+        $this->post("/{$business->slug}/randevu", [
+            'service_id' => $service->id, 'staff_id' => $staff->id,
+            'date' => $date, 'time' => '10:00',
+            'customer_name' => 'Cift Kayit', 'customer_phone' => '0533 111 88 77', 'kvkk' => '1',
+        ])->assertRedirect();
+
+        Tenancy::forget();
+
+        $this->post("/{$business->slug}/randevu", [
+            'service_id' => $service->id, 'staff_id' => $staff->id,
+            'date' => $date, 'time' => '11:00',
+            'customer_name' => 'Cift Kayit', 'customer_phone' => '+905331118877', 'kvkk' => '1',
+        ])->assertRedirect();
+
+        Tenancy::forget();
+
+        $this->assertSame(1, Customer::query()->where('business_id', $business->id)->count(),
+            'Farkli formatlardaki ayni numara tek musteri olmali');
+    }
+
     // Personel rol kisiti -------------------------------------------------
 
     public function test_staff_only_sees_own_calendar_events(): void

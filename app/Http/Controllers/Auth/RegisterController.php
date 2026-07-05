@@ -87,7 +87,6 @@ class RegisterController extends Controller
                 'phone' => $data['phone'],
                 'password' => Hash::make($data['password']),
             ]);
-            $user->forceFill(['email_verified_at' => now()])->save();
 
             $business->users()->attach($user->id, ['role' => BusinessRole::Owner->value]);
 
@@ -96,6 +95,13 @@ class RegisterController extends Controller
 
         Auth::login($user);
         $request->session()->regenerate();
+
+        // Dogrulama e-postasi gonder (mail hatasi kaydi engellemesin)
+        try {
+            $user->sendEmailVerificationNotification();
+        } catch (\Throwable $e) {
+            report($e);
+        }
 
         $business = $user->businesses()->first();
 

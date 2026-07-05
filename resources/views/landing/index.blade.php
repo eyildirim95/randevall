@@ -6,6 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content="Berber, kuaför, güzellik salonu ve tüm randevulu işletmeler için online randevu, WhatsApp hatırlatma, gelir-gider takibi ve müşteri yönetimi. Kıbrıs'ın randevu sistemi."/>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    <link rel="canonical" href="{{ url('/') }}"/>
+    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any"/>
+
+    {{-- Sosyal paylasim (Open Graph / Twitter) --}}
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Reserup"/>
+    <meta property="og:title" content="Reserup — İşletmeniz İçin Akıllı Randevu Sistemi"/>
+    <meta property="og:description" content="Online randevu, WhatsApp hatırlatma, gelir-gider takibi ve müşteri yönetimi tek panelde. 14 gün ücretsiz deneyin."/>
+    <meta property="og:url" content="{{ url('/') }}"/>
+    <meta property="og:image" content="{{ asset('images/og-cover.png') }}"/>
+    <meta property="og:locale" content="tr_TR"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Reserup — İşletmeniz İçin Akıllı Randevu Sistemi"/>
+    <meta name="twitter:description" content="Online randevu, WhatsApp hatırlatma ve müşteri yönetimi tek panelde. 14 gün ücretsiz."/>
+    <meta name="twitter:image" content="{{ asset('images/og-cover.png') }}"/>
     @vite(['resources/scss/app.scss', 'resources/scss/icons.scss'])
     <style>
         :root {
@@ -630,10 +645,16 @@
                 <p class="lp-muted mb-0 mt-2 fs-14">İşletmeniz için akıllı randevu sistemi — Kıbrıs 🇨🇾</p>
             </div>
             <div class="col-md-6 text-md-end">
-                <div class="d-flex gap-4 justify-content-md-end justify-content-start mb-2">
+                <div class="d-flex gap-4 justify-content-md-end justify-content-start mb-2 flex-wrap">
                     <a href="#ozellikler" class="lp-muted text-decoration-none fs-14">Özellikler</a>
                     <a href="#fiyatlar" class="lp-muted text-decoration-none fs-14">Fiyatlar</a>
                     <a href="{{ route('login') }}" class="lp-muted text-decoration-none fs-14">Giriş Yap</a>
+                </div>
+                <div class="d-flex gap-3 justify-content-md-end justify-content-start mb-2 flex-wrap">
+                    <a href="{{ route('legal.terms') }}" class="lp-muted text-decoration-none fs-13">Kullanım Koşulları</a>
+                    <a href="{{ route('legal.privacy') }}" class="lp-muted text-decoration-none fs-13">Gizlilik &amp; KVKK</a>
+                    <a href="{{ route('legal.distance-sales') }}" class="lp-muted text-decoration-none fs-13">Mesafeli Satış</a>
+                    <a href="{{ route('legal.cookies') }}" class="lp-muted text-decoration-none fs-13">Çerez Politikası</a>
                 </div>
                 <p class="lp-muted fs-13 mb-0">© {{ date('Y') }} Reserup. Tüm hakları saklıdır.</p>
             </div>
@@ -641,10 +662,35 @@
     </div>
 </footer>
 
+{{-- ── Çerez onay banner'ı ─────────────────────────────────── --}}
+<div id="cookie-banner" style="display:none;position:fixed;left:16px;right:16px;bottom:16px;z-index:1080;
+     max-width:760px;margin:0 auto;background:#1a1a2e;color:#e9ecf5;border:1px solid rgba(255,255,255,.12);
+     border-radius:14px;padding:16px 20px;box-shadow:0 20px 60px rgba(0,0,0,.4);">
+    <div class="d-flex flex-column flex-md-row align-items-md-center gap-3">
+        <p class="mb-0 fs-14" style="flex:1">
+            Deneyiminizi iyileştirmek için zorunlu ve tercih çerezleri kullanıyoruz.
+            Detaylar için <a href="{{ route('legal.cookies') }}" style="color:var(--lp-primary-2, #b39ddb)">Çerez Politikası</a>.
+        </p>
+        <button id="cookie-accept" class="btn btn-glow px-4">Tamam</button>
+    </div>
+</div>
+
 @vite(['resources/js/app.js'])
 <script>
     // Body sonunda calisir; DOM hazir oldugundan dogrudan baslatilir.
     (function () {
+        // Cerez onay banner'i (localStorage ile bir kez gosterilir)
+        try {
+            const banner = document.getElementById('cookie-banner');
+            if (banner && !localStorage.getItem('cookie_consent')) {
+                banner.style.display = 'block';
+                document.getElementById('cookie-accept').addEventListener('click', () => {
+                    localStorage.setItem('cookie_consent', '1');
+                    banner.style.display = 'none';
+                });
+            }
+        } catch (e) { /* localStorage kapaliysa sessizce gec */ }
+
         // Navbar scroll durumu
         const nav = document.getElementById('lp-nav');
         const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);

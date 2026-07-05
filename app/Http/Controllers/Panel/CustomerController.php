@@ -127,6 +127,11 @@ class CustomerController extends Controller
 
     private function validated(Business $business, Request $request, ?Customer $customer = null): array
     {
+        // Telefonu E.164'e normalize et (online rezervasyonla ayni musteriye esler, mukerrer onlenir)
+        if ($request->filled('phone')) {
+            $request->merge(['phone' => \App\Services\Messaging\PhoneNumber::e164((string) $request->input('phone'))]);
+        }
+
         return $request->validate([
             'name' => ['required', 'string', 'max:120'],
             'phone' => [

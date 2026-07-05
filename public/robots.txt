@@ -1,2 +1,10 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /panel
+Disallow: /odeme
+Disallow: /randevu
+Disallow: /giris
+Disallow: /kayit
+Allow: /
+
+Sitemap: /sitemap.xml
