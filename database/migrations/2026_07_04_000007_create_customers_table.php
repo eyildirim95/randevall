@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('customers', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('business_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('phone', 30);
+            $table->string('email')->nullable();
+            $table->date('birthday')->nullable();
+            $table->string('gender', 10)->nullable();
+            $table->text('notes')->nullable();
+            $table->integer('loyalty_points')->default(0);
+            $table->unsignedInteger('total_appointments')->default(0);
+            $table->unsignedInteger('completed_appointments')->default(0);
+            $table->unsignedInteger('no_show_count')->default(0);
+            $table->decimal('total_spent', 12, 2)->default(0);
+            $table->boolean('is_blacklisted')->default(false);
+            $table->timestamp('kvkk_consent_at')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->unique(['business_id', 'phone']);
+            $table->index(['business_id', 'name']);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('customers');
+    }
+};
