@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="index, follow">
+    @include('layouts.partials.favicons')
     <title>@yield('title') — {{ config('app.name') }}</title>
     <style>
         :root { --brand: #7f56da; }
@@ -30,7 +31,7 @@
 <body>
     <nav class="legal-nav">
         <div class="legal-wrap">
-            <a href="{{ route('landing') }}" class="brand">Boo<span>Kıbrıs</span></a>
+            <a href="{{ route('landing') }}" class="brand" style="display:inline-flex;align-items:center;gap:8px"><img src="{{ asset('favicon-32.png') }}" height="28" alt="">Boo<span>Kıbrıs</span></a>
         </div>
     </nav>
 

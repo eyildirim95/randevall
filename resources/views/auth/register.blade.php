@@ -6,7 +6,7 @@
             <div class="card-body px-3 py-4">
                 <div class="mx-auto mb-3 text-center auth-logo">
                     <a href="{{ route('landing') }}" class="fw-bold fs-28 text-decoration-none">
-                        <span class="text-dark">Boo</span><span class="text-primary">Kıbrıs</span>
+                        <img src="{{ asset('favicon-32.png') }}" height="34" class="me-2 align-middle" alt=""><span class="text-dark">Boo</span><span class="text-primary">Kıbrıs</span>
                     </a>
                 </div>
 

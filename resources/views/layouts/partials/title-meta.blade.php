@@ -4,4 +4,4 @@
 <meta name="description" content="BooKıbrıs — İşletmeniz için online randevu ve müşteri yönetim sistemi"/>
 <meta name="author" content="BooKıbrıs"/>
 <meta name="csrf-token" content="{{ csrf_token() }}"/>
-<link rel="shortcut icon" href="/images/favicon.ico">
+@include('layouts.partials.favicons')

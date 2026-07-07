@@ -7,7 +7,7 @@
     <meta name="description" content="Berber, kuaför, güzellik salonu ve tüm randevulu işletmeler için online randevu, WhatsApp hatırlatma, gelir-gider takibi ve müşteri yönetimi. Kıbrıs'ın randevu sistemi."/>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <link rel="canonical" href="{{ url('/') }}"/>
-    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any"/>
+    @include('layouts.partials.favicons')
 
     {{-- Sosyal paylasim (Open Graph / Twitter) --}}
     <meta property="og:type" content="website"/>
@@ -286,7 +286,7 @@
 {{-- ── Navbar ──────────────────────────────────────────────── --}}
 <nav class="lp-nav py-3" id="lp-nav">
     <div class="container d-flex align-items-center justify-content-between">
-        <a class="fs-24 fw-bold text-white text-decoration-none" href="#">Boo<span style="color:var(--lp-primary-2)">Kıbrıs</span></a>
+        <a class="fs-24 fw-bold text-white text-decoration-none d-inline-flex align-items-center" href="#"><img src="{{ asset('favicon-32.png') }}" height="32" class="me-2" alt="BooKıbrıs">Boo<span style="color:var(--lp-primary-2)">Kıbrıs</span></a>
 
         <div class="d-none d-lg-flex align-items-center gap-4">
             <a class="nav-link" href="#ozellikler">Özellikler</a>
@@ -641,7 +641,7 @@
     <div class="container">
         <div class="row g-4 align-items-center">
             <div class="col-md-6">
-                <a class="fs-24 fw-bold text-white text-decoration-none" href="#">Boo<span style="color:var(--lp-primary-2)">Kıbrıs</span></a>
+                <a class="fs-24 fw-bold text-white text-decoration-none d-inline-flex align-items-center" href="#"><img src="{{ asset('favicon-32.png') }}" height="32" class="me-2" alt="BooKıbrıs">Boo<span style="color:var(--lp-primary-2)">Kıbrıs</span></a>
                 <p class="lp-muted mb-0 mt-2 fs-14">İşletmeniz için akıllı randevu sistemi — Kıbrıs 🇨🇾</p>
             </div>
             <div class="col-md-6 text-md-end">
