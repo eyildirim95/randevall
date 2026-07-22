@@ -101,7 +101,10 @@ class BusinessController extends Controller
         $business->load(['plan', 'users', 'subscriptions.plan'])
             ->loadCount(['customers', 'appointments', 'staff', 'services']);
 
-        return view('superadmin.businesses.show', compact('business'));
+        return view('superadmin.businesses.show', [
+            'business' => $business,
+            'plans' => SubscriptionPlan::query()->active()->orderBy('sort_order')->get(),
+        ]);
     }
 
     public function edit(Business $business): View
@@ -118,12 +121,27 @@ class BusinessController extends Controller
 
         $business->update($data['business']);
 
-        $business->forceFill([
-            'subscription_plan_id' => $data['plan_id'] ?? null,
-            'plan_expires_at' => $data['plan_expires_at'] ?? $business->plan_expires_at,
-        ])->save();
+        $planExpiresAt = ! empty($data['plan_expires_at'])
+            ? \Carbon\Carbon::parse($data['plan_expires_at'])
+            : $business->plan_expires_at;
 
-        return redirect()->route('admin.businesses.show', $business)->with('success', 'İşletme güncellendi.');
+        $updates = [
+            'subscription_plan_id' => $data['plan_id'] ?? null,
+            'plan_expires_at' => $planExpiresAt,
+        ];
+
+        if ($planExpiresAt?->isFuture()) {
+            $updates['trial_ends_at'] = null;
+        }
+
+        $business->forceFill($updates)->save();
+
+        $message = 'İşletme güncellendi.';
+        if (($data['plan_id'] ?? null) && ! $planExpiresAt) {
+            $message .= ' Plan bitiş tarihi girilmediği için panel erişimi açılmaz; manuel abonelik ekleyin.';
+        }
+
+        return redirect()->route('admin.businesses.show', $business)->with('success', $message);
     }
 
     public function suspend(Business $business, Request $request): RedirectResponse

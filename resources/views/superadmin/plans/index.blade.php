@@ -27,7 +27,7 @@
                                 <td>
                                     <span class="fw-medium">{{ $plan->name }}</span>
                                     @if($plan->is_featured)<span class="badge bg-soft-warning text-warning ms-1">Öne Çıkan</span>@endif
-                                    <small class="text-muted d-block">{{ $plan->slug }} · {{ $plan->trial_days }} gün deneme</small>
+                                    <small class="text-muted d-block">{{ $plan->slug }}@if($plan->trial_days > 0) · {{ $plan->trial_days }} gün deneme @endif</small>
                                 </td>
                                 <td>{{ number_format($plan->price_monthly, 0, ',', '.') }} {{ $plan->currency }}</td>
                                 <td>{{ number_format($plan->price_yearly, 0, ',', '.') }} {{ $plan->currency }}</td>

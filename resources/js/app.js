@@ -21,6 +21,8 @@ import Choices from 'choices.js';
 import  {Autoplay, EffectCreative, EffectFade, Mousewheel, Navigation, Pagination, Scrollbar} from 'swiper/modules'
 import 'iconify-icon';
 import 'simplebar'
+import { initTurkishFormValidation } from './turkish-form-validation.js';
+import { initTurkishDatePickers } from './turkish-date-picker.js';
 
 // Components
 class Components {
@@ -720,6 +722,8 @@ class ToastNotification {
 }
 
 document.addEventListener('DOMContentLoaded', function (e) {
+    initTurkishFormValidation();
+    initTurkishDatePickers();
     new Components().init();
     new FormValidation().init();
     new FormAdvanced().init();

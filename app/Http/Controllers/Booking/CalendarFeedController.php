@@ -33,7 +33,7 @@ class CalendarFeedController extends Controller
         $lines = [
             'BEGIN:VCALENDAR',
             'VERSION:2.0',
-            'PRODID:-//BooKıbrıs//Randevu Takvimi//TR',
+            'PRODID:-//Randevall//Randevu Takvimi//TR',
             'CALSCALE:GREGORIAN',
             'METHOD:PUBLISH',
             'X-WR-CALNAME:'.$this->escape($staff->business->name.' — '.$staff->name),
@@ -56,7 +56,7 @@ class CalendarFeedController extends Controller
 
             $lines = [...$lines,
                 'BEGIN:VEVENT',
-                'UID:bookibris-apt-'.$appointment->id.'@bookibris',
+                'UID:randevall-apt-'.$appointment->id.'@randevall',
                 'DTSTAMP:'.$appointment->updated_at->clone()->utc()->format('Ymd\THis\Z'),
                 'DTSTART:'.$appointment->starts_at->clone()->utc()->format('Ymd\THis\Z'),
                 'DTEND:'.$appointment->ends_at->clone()->utc()->format('Ymd\THis\Z'),
@@ -74,7 +74,7 @@ class CalendarFeedController extends Controller
 
         return response($body, 200, [
             'Content-Type' => 'text/calendar; charset=UTF-8',
-            'Content-Disposition' => 'inline; filename="bookibris-takvim.ics"',
+            'Content-Disposition' => 'inline; filename="randevall-takvim.ics"',
             'Cache-Control' => 'no-cache, private',
         ]);
     }

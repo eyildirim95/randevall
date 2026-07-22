@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Şehir</label>
-                            <input type="text" name="business[city]" class="form-control" maxlength="80" value="{{ old('business.city', $business->city) }}" placeholder="Lefkoşa, Girne...">
+                            <input type="text" name="business[city]" class="form-control" maxlength="80" value="{{ old('business.city', $business->city) }}" placeholder="İstanbul, Ankara, İzmir...">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Abonelik Planı</label>

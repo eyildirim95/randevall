@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Business;
+use App\Services\Messaging\SmsManager;
 use App\Services\Messaging\WhatsAppManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,12 +43,13 @@ class SettingsController extends Controller
             'loyalty_reward_description' => ['nullable', 'string', 'max:190'],
 
             'whatsapp_enabled' => ['nullable', 'boolean'],
+            'sms_enabled' => ['nullable', 'boolean'],
             'birthday_greeting_enabled' => ['nullable', 'boolean'],
             'email_notifications_enabled' => ['nullable', 'boolean'],
             'reminder_hours_before' => ['required', 'integer', 'between:0,168'],
         ]);
 
-        foreach (['online_booking_enabled', 'auto_confirm_online', 'loyalty_enabled', 'whatsapp_enabled', 'birthday_greeting_enabled', 'email_notifications_enabled'] as $flag) {
+        foreach (['online_booking_enabled', 'auto_confirm_online', 'loyalty_enabled', 'whatsapp_enabled', 'sms_enabled', 'birthday_greeting_enabled', 'email_notifications_enabled'] as $flag) {
             $data[$flag] = $request->boolean($flag);
         }
 
@@ -71,12 +73,30 @@ class SettingsController extends Controller
         $result = $whatsapp->send(
             $business,
             $data['test_phone'],
-            'BooKıbrıs test mesajı — WhatsApp entegrasyonunuz çalışıyor! ✅',
+            config('app.name').' test mesajı — WhatsApp entegrasyonunuz çalışıyor! ✅',
             'system',
         );
 
         return $result->success
             ? back()->with('success', 'Test mesajı gönderildi.')
+            : back()->withErrors(['test_phone' => 'Gönderim başarısız: '.$result->error]);
+    }
+
+    public function testSms(Business $business, Request $request, SmsManager $sms): RedirectResponse
+    {
+        $data = $request->validate([
+            'test_phone' => ['required', 'string', 'max:30'],
+        ]);
+
+        $result = $sms->send(
+            $business,
+            $data['test_phone'],
+            config('app.name').' test mesajı — SMS entegrasyonunuz çalışıyor!',
+            'system',
+        );
+
+        return $result->success
+            ? back()->with('success', 'Test SMS gönderildi.')
             : back()->withErrors(['test_phone' => 'Gönderim başarısız: '.$result->error]);
     }
 }

@@ -6,7 +6,7 @@
         @php
             $cards = [
                 ['label' => 'Toplam İşletme', 'value' => $stats['business_count'], 'sub' => $stats['active_businesses'].' aktif', 'icon' => 'ri-store-2-line', 'color' => 'primary'],
-                ['label' => 'Deneme Sürümünde', 'value' => $stats['trial_businesses'], 'sub' => 'işletme', 'icon' => 'ri-hourglass-line', 'color' => 'warning'],
+                ['label' => 'Askıdaki İşletme', 'value' => $stats['suspended_businesses'], 'sub' => 'işletme', 'icon' => 'ri-pause-circle-line', 'color' => 'warning'],
                 ['label' => 'Bu Ay Ciro', 'value' => number_format($stats['month_revenue'], 0, ',', '.').' ₺', 'sub' => 'onaylı ödemeler', 'icon' => 'ri-money-dollar-circle-line', 'color' => 'success'],
                 ['label' => 'Bu Ay Randevu', 'value' => $stats['month_appointments'], 'sub' => 'toplam '.$stats['total_appointments'], 'icon' => 'ri-calendar-check-line', 'color' => 'info'],
             ];
@@ -82,18 +82,11 @@
         <div class="col-xl-4">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-0">Yeni Demo Talepleri <span class="badge bg-danger">{{ $stats['new_demo_requests'] }}</span></h4>
-                    <a href="{{ route('admin.demo-requests.index') }}" class="btn btn-sm btn-soft-primary">Tümü</a>
+                    <h4 class="card-title mb-0">Bu Ay Gönderilen Mesajlar</h4>
                 </div>
-                <div class="card-body py-2">
-                    @forelse($recentDemoRequests as $demo)
-                        <div class="py-2 border-bottom">
-                            <div class="fw-medium">{{ $demo->name }} @if($demo->business_name) — {{ $demo->business_name }} @endif</div>
-                            <small class="text-muted">{{ $demo->phone }} · {{ $demo->created_at->diffForHumans() }}</small>
-                        </div>
-                    @empty
-                        <p class="text-muted text-center my-3">Yeni talep yok.</p>
-                    @endforelse
+                <div class="card-body text-center py-4">
+                    <h2 class="fw-bold mb-1">{{ number_format($stats['month_messages'], 0, ',', '.') }}</h2>
+                    <p class="text-muted mb-0 fs-13">WhatsApp ve e-posta bildirimleri</p>
                 </div>
             </div>
 

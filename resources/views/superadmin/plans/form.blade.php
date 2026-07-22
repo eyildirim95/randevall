@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Deneme Süresi (gün)</label>
-                            <input type="number" name="trial_days" class="form-control" required min="0" max="90" value="{{ old('trial_days', $plan->trial_days ?? 14) }}">
+                            <input type="number" name="trial_days" class="form-control" required min="0" max="90" value="{{ old('trial_days', $plan->trial_days ?? 0) }}">
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Sıra</label>

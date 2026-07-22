@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     @include('layouts.partials.favicons')
-    <title>@yield('code') — {{ config('app.name', 'BooKıbrıs') }}</title>
+    <title>@yield('code') — {{ config('app.name', 'Randevall') }}</title>
     <style>
         * { box-sizing: border-box; }
         body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
@@ -25,7 +25,7 @@
 </head>
 <body>
     <div class="box">
-        <a href="{{ url('/') }}" class="brand">Boo<span>Kıbrıs</span></a>
+        @include('layouts.partials.brand-logo', ['href' => url('/'), 'class' => 'fs-22'])
         <p class="code">@yield('code')</p>
         <h1>@yield('heading')</h1>
         <p>@yield('message')</p>

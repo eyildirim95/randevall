@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 text-center">
-                {{ date('Y') }} © BooKıbrıs — Akıllı Randevu Sistemi
+                {{ date('Y') }} © {{ config('app.name') }} — Akıllı Randevu Sistemi
             </div>
         </div>
     </div>

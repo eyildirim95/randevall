@@ -11,5 +11,5 @@
 Yanıtla
 </x-mail::button>
 
-BooKıbrıs
+{{ config('app.name') }}
 </x-mail::message>

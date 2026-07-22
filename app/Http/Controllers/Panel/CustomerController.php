@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Panel;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
 use App\Models\Customer;
+use App\Models\CustomerRecord;
 use App\Services\Loyalty\LoyaltyService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class CustomerController extends Controller
 
         $customers = Customer::query()
             ->search($q)
+            ->withCount('records')
             ->orderBy('name')
             ->paginate(20)
             ->withQueryString();
@@ -59,6 +61,7 @@ class CustomerController extends Controller
         $customer->load([
             'appointments' => fn ($q) => $q->with(['service', 'staff'])->orderByDesc('starts_at')->limit(30),
             'loyaltyTransactions' => fn ($q) => $q->latest()->limit(20),
+            'records.author',
         ]);
 
         return view('panel.customers.show', compact('business', 'customer'));
@@ -115,6 +118,35 @@ class CustomerController extends Controller
         $loyalty->adjust($customer, (int) $data['points'], $data['description'] ?? null, $request->user()->id);
 
         return back()->with('success', 'Puan güncellendi.');
+    }
+
+    /** Müşteri gelişim / işlem takip notu ekler. */
+    public function storeRecord(Business $business, Customer $customer, Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'body' => ['required', 'string', 'max:5000'],
+        ]);
+
+        $record = new CustomerRecord([
+            'body' => $data['body'],
+            'created_by' => $request->user()->id,
+        ]);
+        $record->business_id = $business->id;
+        $record->customer_id = $customer->id;
+        $record->save();
+
+        return back()->with('success', 'Takip notu eklendi.');
+    }
+
+    public function destroyRecord(Business $business, Customer $customer, CustomerRecord $record, Request $request): RedirectResponse
+    {
+        $this->guardManager($business, $request);
+
+        abort_unless($record->customer_id === $customer->id, 404);
+
+        $record->delete();
+
+        return back()->with('success', 'Takip notu silindi.');
     }
 
     /** Musteri duzenleme/silme yalnizca yonetici yetkisidir. */

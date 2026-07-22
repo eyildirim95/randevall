@@ -10,7 +10,7 @@
             <div class="card mb-0 {{ $message->is_admin ? 'bg-light bg-opacity-50' : 'border-success border' }}">
                 <div class="card-body py-2 px-3">
                     <div class="d-flex justify-content-between gap-3 mb-1">
-                        <strong class="fs-13">{{ $message->is_admin ? 'BooKıbrıs Destek' : ($message->user?->name ?? 'İşletme') }}</strong>
+                        <strong class="fs-13">{{ $message->is_admin ? config('app.name').' Destek' : ($message->user?->name ?? 'İşletme') }}</strong>
                         <small class="text-muted">{{ $message->created_at->format('d.m.Y H:i') }}</small>
                     </div>
                     <p class="mb-0" style="white-space: pre-line">{{ $message->body }}</p>

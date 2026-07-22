@@ -1,20 +1,20 @@
-# BooKıbrıs — Multi-Tenant Randevu Sistemi
+# Randevall — Multi-Tenant Randevu Sistemi
 
-Kıbrıs pazarı için randevuyla çalışan işletmelere (berber, kuaför, güzellik salonu, klinik...) yönelik SaaS randevu yönetim sistemi. Laravel 13 + MySQL + Bootstrap 5 (Lahomes admin teması).
+Türkiye pazarı için randevuyla çalışan işletmelere (berber, kuaför, güzellik salonu, klinik...) yönelik SaaS randevu yönetim sistemi. Laravel 13 + MySQL + Bootstrap 5 (Lahomes admin teması).
 
 ## Özellikler
 
-- **Multi-tenant mimari** — işletmeler `domain.com/{slug}` ile ayrışır; veri izolasyonu ORM seviyesinde global scope + scoped route binding ile sağlanır
+- **Multi-tenant mimari** — işletmeler `randevall.com/{slug}` ile ayrışır; veri izolasyonu ORM seviyesinde global scope + scoped route binding ile sağlanır
 - **Tek giriş noktası** — süper admin, işletme sahibi ve personel aynı `/giris` ekranından girer, rolüne göre yönlendirilir
 - **Akıllı takvim** — FullCalendar; boş alana tıklayınca randevu oluşturma, sürükle-bırak ile taşıma/uzatma, personel filtresi, durum yönetimi
-- **Online rezervasyon** — `domain.com/{slug}` public sayfası: hizmet → personel → uygun saat → bilgiler; çalışma saati/mola/kapatma/çakışma kontrolü
+- **Online rezervasyon** — `randevall.com/{slug}` public sayfası: hizmet → personel → uygun saat → bilgiler; çalışma saati/mola/kapatma/çakışma kontrolü
 - **WhatsApp + e-posta bildirimleri** — onay, hatırlatma (zamanlanmış), iptal; Meta Cloud API / Twilio / log provider
 - **Gelir-gider tablosu** — tamamlanan randevu otomatik gelire işlenir; kategori bazlı gider takibi, CSV dışa aktarım
 - **Sadık müşteri sistemi** — ziyaret başına puan, eşikte ödül, manuel düzeltme
 - **Takvim kapatma** — işletme geneli veya personel bazlı tatil/izin aralıkları
 - **Raporlama** — günlük seri, personel performansı, hizmet dağılımı, kaynak analizi, en iyi müşteriler
-- **Süper admin paneli** — işletme yönetimi, planlar, ödemeler (PayTR + havale/EFT), demo talepleri, duyurular, impersonation, mesaj logları
-- **Landing page** — Türkçe pazarlama sayfası + demo talep formu (honeypot + rate limit)
+- **Süper admin paneli** — işletme yönetimi, planlar, ödemeler (PayTR + havale/EFT), duyurular, impersonation, mesaj logları
+- **Landing page** — Türkçe pazarlama sayfası + self-servis kayıt
 
 ## Kurulum
 
@@ -36,15 +36,15 @@ php artisan schedule:work    # gelistirme
 # prod: * * * * * php artisan schedule:run
 ```
 
-## Demo Hesaplar (seed)
+## Seed Hesaplar
 
 | Rol | E-posta | Şifre |
 |---|---|---|
-| Süper Admin | admin@bookibris.com | admin123! |
-| İşletme Sahibi | demo@bookibris.com | demo123! |
+| Süper Admin | admin@randevall.com | admin123! |
+| İşletme Sahibi | ornek@randevall.com | demo123! |
 
-- İşletme paneli: `/demo-berber/panel`
-- Online rezervasyon: `/demo-berber`
+- İşletme paneli: `/ornek-berber/panel`
+- Online rezervasyon: `/ornek-berber`
 - Süper admin: `/admin`
 
 ## Mimari Notlar

@@ -102,7 +102,64 @@
             </div>
 
             <div class="card">
-                <div class="card-header"><h4 class="card-title mb-0">Abonelik Geçmişi</h4></div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title mb-0">Abonelik Geçmişi</h4>
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="collapse" data-bs-target="#manual-subscription-form">
+                        <i class="ri-add-line me-1"></i>Manuel Abonelik Ekle
+                    </button>
+                </div>
+
+                <div id="manual-subscription-form" class="collapse @if($errors->has('plan_id') || $errors->has('period') || $errors->has('starts_at') || $errors->has('ends_at') || $errors->has('amount') || $errors->has('note')) show @endif border-bottom">
+                    <div class="card-body bg-light bg-opacity-50">
+                        <form method="POST" action="{{ route('admin.businesses.subscriptions.store', $business) }}" class="row g-3">
+                            @csrf
+                            <div class="col-md-4">
+                                <label class="form-label">Plan <span class="text-danger">*</span></label>
+                                <select name="plan_id" class="form-select" required>
+                                    <option value="">Seçin...</option>
+                                    @foreach($plans as $plan)
+                                        <option value="{{ $plan->id }}" @selected(old('plan_id', $business->subscription_plan_id) == $plan->id)>
+                                            {{ $plan->name }} — {{ number_format($plan->price_monthly, 0, ',', '.') }} ₺/ay
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Dönem <span class="text-danger">*</span></label>
+                                <select name="period" class="form-select" required>
+                                    <option value="monthly" @selected(old('period', 'monthly') === 'monthly')>Aylık</option>
+                                    <option value="yearly" @selected(old('period') === 'yearly')>Yıllık</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Tutar (₺)</label>
+                                <input type="number" name="amount" class="form-control" min="0" step="0.01" placeholder="Boş = plan fiyatı" value="{{ old('amount') }}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Başlangıç</label>
+                                <input type="date" name="starts_at" class="form-control" value="{{ old('starts_at', now()->format('Y-m-d')) }}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Bitiş</label>
+                                <input type="date" name="ends_at" class="form-control" value="{{ old('ends_at') }}">
+                                <small class="text-muted">Boş bırakılırsa döneme göre otomatik hesaplanır.</small>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Not</label>
+                                <input type="text" name="note" class="form-control" maxlength="500" placeholder="Örn: Havale ile ödendi" value="{{ old('note') }}">
+                            </div>
+                            <div class="col-12">
+                                @foreach($errors->all() as $error)
+                                    <div class="text-danger fs-13">{{ $error }}</div>
+                                @endforeach
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Manuel abonelik eklensin mi? Mevcut aktif abonelik sonlandırılır.')">
+                                    Aboneliği Tanımla
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="table-responsive">
                     <table class="table table-hover table-centered mb-0">
                         <thead class="bg-light bg-opacity-50">

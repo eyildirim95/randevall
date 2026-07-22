@@ -266,6 +266,10 @@ class BookingService
             }
         });
 
+        if ($old === AppointmentStatus::Pending && $newStatus === AppointmentStatus::Confirmed) {
+            $this->notifier->confirmation($appointment->fresh(['business', 'customer', 'service', 'staff']));
+        }
+
         // Tamamlanan randevu icin degerlendirme daveti (islem sonrasi)
         if ($newStatus === AppointmentStatus::Completed) {
             $this->notifier->ratingRequest($appointment);

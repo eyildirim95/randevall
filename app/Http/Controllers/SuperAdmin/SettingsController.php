@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\SystemSetting;
+use App\Services\Messaging\SmsManager;
 use App\Services\Messaging\WhatsAppManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,6 +26,9 @@ class SettingsController extends Controller
         'landing_phone' => '',
         'whatsapp_provider' => 'log',
         'whatsapp_phone_number_id' => '',
+        'sms_provider' => 'log',
+        'sms_username' => '',
+        'sms_source_addr' => '',
     ];
 
     public function edit(): View
@@ -34,6 +38,7 @@ class SettingsController extends Controller
 
         // API anahtari sifreli saklanir; sadece dolu/bos bilgisi gosterilir
         $settings['whatsapp_key_set'] = SystemSetting::get('whatsapp_api_key', '') !== '';
+        $settings['sms_password_set'] = SystemSetting::get('sms_password', '') !== '';
 
         return view('superadmin.settings', ['settings' => $settings]);
     }
@@ -53,11 +58,17 @@ class SettingsController extends Controller
             'whatsapp_provider' => ['required', Rule::in(['meta', 'twilio', 'log'])],
             'whatsapp_phone_number_id' => ['nullable', 'string', 'max:120'],
             'whatsapp_api_key' => ['nullable', 'string', 'max:500'],
+            'sms_provider' => ['required', Rule::in(['verimor', 'log'])],
+            'sms_username' => ['nullable', 'string', 'max:30'],
+            'sms_source_addr' => ['nullable', 'string', 'max:11'],
+            'sms_password' => ['nullable', 'string', 'max:120'],
         ]);
 
-        // API anahtari yalnizca doluysa guncellenir (bos birakilirsa mevcut korunur)
         $apiKey = $data['whatsapp_api_key'] ?? null;
         unset($data['whatsapp_api_key']);
+
+        $smsPassword = $data['sms_password'] ?? null;
+        unset($data['sms_password']);
 
         foreach ($data as $key => $value) {
             SystemSetting::set($key, $value ?? '');
@@ -65,6 +76,10 @@ class SettingsController extends Controller
 
         if ($apiKey) {
             WhatsAppManager::storeApiKey($apiKey);
+        }
+
+        if ($smsPassword) {
+            SmsManager::storePassword($smsPassword);
         }
 
         return back()->with('success', 'Sistem ayarları kaydedildi.');
@@ -78,11 +93,27 @@ class SettingsController extends Controller
 
         $result = $whatsapp->sendPlatformTest(
             $data['test_phone'],
-            'BooKıbrıs platform testi — merkezi WhatsApp API bağlantınız çalışıyor! ✅',
+            config('app.name').' platform testi — merkezi WhatsApp API bağlantınız çalışıyor! ✅',
         );
 
         return $result->success
             ? back()->with('success', 'Test mesajı gönderildi.')
+            : back()->withErrors(['test_phone' => 'Gönderim başarısız: '.$result->error]);
+    }
+
+    public function testSms(Request $request, SmsManager $sms): RedirectResponse
+    {
+        $data = $request->validate([
+            'test_phone' => ['required', 'string', 'max:30'],
+        ]);
+
+        $result = $sms->sendPlatformTest(
+            $data['test_phone'],
+            config('app.name').' platform testi — Verimor SMS bağlantınız çalışıyor!',
+        );
+
+        return $result->success
+            ? back()->with('success', 'Test SMS gönderildi.')
             : back()->withErrors(['test_phone' => 'Gönderim başarısız: '.$result->error]);
     }
 }

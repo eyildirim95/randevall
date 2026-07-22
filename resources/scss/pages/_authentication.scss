@@ -70,3 +70,44 @@ p.no-span {
           left: 1.5%;
      }
 }
+
+// Online randevu — tarih & saat secimi
+.booking-date-input,
+.booking-datetime .flatpickr-input {
+     max-width: 14rem;
+}
+
+.booking-slots {
+     display: grid;
+     grid-template-columns: repeat(auto-fill, minmax(4.75rem, 1fr));
+     gap: 0.5rem;
+     max-height: 16rem;
+     overflow-y: auto;
+     padding: 0.125rem;
+
+     &.is-empty {
+          display: flex;
+          align-items: center;
+          max-height: none;
+          overflow: visible;
+          min-height: 2.75rem;
+          padding: 0.625rem 0.875rem;
+          background-color: var(--#{$prefix}tertiary-bg);
+          border: 1px dashed var(--#{$prefix}border-color);
+          border-radius: $border-radius;
+     }
+}
+
+.booking-slot-item {
+     min-width: 0;
+}
+
+.booking-slot-btn {
+     --#{$prefix}btn-padding-y: 0.5rem;
+     --#{$prefix}btn-padding-x: 0.375rem;
+     --#{$prefix}btn-font-size: 0.8125rem;
+     min-height: 2.5rem;
+     border-radius: $border-radius;
+     font-weight: 500;
+     width: 100%;
+}

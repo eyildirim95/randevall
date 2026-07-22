@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('instagram')->nullable();
             $table->string('website')->nullable();
-            $table->string('timezone', 64)->default('Europe/Nicosia');
+            $table->string('timezone', 64)->default('Europe/Istanbul');
             $table->string('currency', 3)->default('TRY');
 
             // Rezervasyon ayarlari

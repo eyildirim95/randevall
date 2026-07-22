@@ -35,6 +35,9 @@
                                     @if($customer->birthday)
                                         <small class="text-muted d-block">🎂 {{ $customer->birthday->format('d.m.Y') }}</small>
                                     @endif
+                                    @if($customer->records_count > 0)
+                                        <small class="text-muted d-block"><i class="ri-file-list-3-line"></i> {{ $customer->records_count }} takip notu</small>
+                                    @endif
                                 </td>
                                 <td>{{ $customer->phone }}</td>
                                 <td>{{ $customer->total_appointments }} <small class="text-muted">({{ $customer->completed_appointments }} tamamlandı)</small></td>

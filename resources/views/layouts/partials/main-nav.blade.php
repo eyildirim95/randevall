@@ -8,12 +8,12 @@
 <div class="main-nav">
     <div class="logo-box">
         <a href="{{ $homeUrl }}" class="logo-dark">
-            <span class="logo-sm"><img src="{{ asset('favicon-32.png') }}" alt="BooKıbrıs" height="28"></span>
-            <span class="logo-lg fw-bold fs-22 text-dark">Boo<span class="text-primary">Kıbrıs</span></span>
+            <span class="logo-sm"><img src="{{ asset('favicon-32.png') }}" alt="{{ config('app.name') }}" height="28"></span>
+            <span class="logo-lg">@include('layouts.partials.brand-logo', ['class' => 'fs-22', 'size' => 28])</span>
         </a>
         <a href="{{ $homeUrl }}" class="logo-light">
-            <span class="logo-sm"><img src="{{ asset('favicon-32.png') }}" alt="BooKıbrıs" height="28"></span>
-            <span class="logo-lg fw-bold fs-22 text-white">Boo<span class="text-primary">Kıbrıs</span></span>
+            <span class="logo-sm"><img src="{{ asset('favicon-32.png') }}" alt="{{ config('app.name') }}" height="28"></span>
+            <span class="logo-lg">@include('layouts.partials.brand-logo', ['class' => 'fs-22', 'size' => 28, 'textClass' => 'text-white'])</span>
         </a>
     </div>
 
@@ -159,12 +159,6 @@
                     <a class="nav-link @if(request()->routeIs('admin.payments*')) active @endif" href="{{ route('admin.payments.index') }}">
                         <span class="nav-icon"><i class="ri-bank-card-line"></i></span>
                         <span class="nav-text">Ödemeler</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link @if(request()->routeIs('admin.demo-requests*')) active @endif" href="{{ route('admin.demo-requests.index') }}">
-                        <span class="nav-icon"><i class="ri-user-voice-line"></i></span>
-                        <span class="nav-text">Demo Talepleri</span>
                     </a>
                 </li>
                 @php $openTickets = \App\Models\Ticket::query()->where('status', 'open')->count(); @endphp

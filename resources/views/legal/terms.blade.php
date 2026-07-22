@@ -4,15 +4,15 @@
 @section('content')
 <p>
     Bu Kullanım Koşulları ("Koşullar"), @include('legal.partials.field', ['key' => 'company', 'label' => 'Şirket Ünvanı'])
-    ("BooKıbrıs", "biz") tarafından sunulan {{ config('app.name') }} randevu yönetim platformunun ("Hizmet")
+    ("Randevall", "biz") tarafından sunulan {{ config('app.name') }} randevu yönetim platformunun ("Hizmet")
     kullanımına ilişkin şartları düzenler. Hizmete kayıt olarak veya kullanarak bu Koşulları kabul etmiş sayılırsınız.
 </p>
 
 <h2>1. Hizmetin Tanımı</h2>
 <p>
-    BooKıbrıs; işletmelerin online randevu alması, müşteri ve personel yönetimi, hatırlatma mesajları,
+    Randevall; işletmelerin online randevu alması, müşteri ve personel yönetimi, hatırlatma mesajları,
     gelir-gider takibi ve benzeri özellikler sunan bulut tabanlı (SaaS) bir yazılım hizmetidir.
-    Hizmet abonelik modeliyle sunulur ve deneme süresi içerir.
+    Hizmet abonelik modeliyle sunulur.
 </p>
 
 <h2>2. Hesap ve Sorumluluk</h2>
@@ -20,7 +20,7 @@
     <li>Kayıt sırasında verdiğiniz bilgilerin doğru, güncel ve eksiksiz olduğunu taahhüt edersiniz.</li>
     <li>Hesap güvenliğinizden (şifre dahil) ve hesabınız altında gerçekleşen işlemlerden siz sorumlusunuz.</li>
     <li>İşletmeniz aracılığıyla topladığınız müşteri verilerinin işlenmesinde veri sorumlusu sizsiniz;
-        BooKıbrıs bu verileri sizin adınıza işleyen konumundadır (bkz. Gizlilik &amp; KVKK).</li>
+        Randevall bu verileri sizin adınıza işleyen konumundadır (bkz. Gizlilik &amp; KVKK).</li>
 </ul>
 
 <h2>3. Abonelik, Deneme ve Ödeme</h2>
@@ -38,7 +38,7 @@
 
 <h2>5. Mesajlaşma (WhatsApp / E-posta)</h2>
 <p>Müşterilerinize gönderilen hatırlatma ve bilgilendirme mesajlarının içeriğinden ve ilgili kişilerin
-    onayını almış olmaktan siz sorumlusunuz. BooKıbrıs yalnızca teknik altyapıyı sağlar.</p>
+    onayını almış olmaktan siz sorumlusunuz. Randevall yalnızca teknik altyapıyı sağlar.</p>
 
 <h2>6. Hizmet Sürekliliği</h2>
 <p>Hizmeti kesintisiz sunmak için makul çaba gösteririz; ancak bakım, güncelleme veya öngörülemeyen
@@ -57,7 +57,7 @@
     Değişiklik sonrası kullanımınız güncel Koşulları kabul ettiğiniz anlamına gelir.</p>
 
 <h2>10. Uygulanacak Hukuk ve İletişim</h2>
-<p>Bu Koşullar Kuzey Kıbrıs Türk Cumhuriyeti / Türkiye Cumhuriyeti mevzuatına tabidir.
+<p>Bu Koşullar Türkiye Cumhuriyeti mevzuatına tabidir.
     Sorularınız için: @include('legal.partials.field', ['key' => 'email', 'label' => 'E-posta'])
     @if(config('legal.phone')) — @include('legal.partials.field', ['key' => 'phone', 'label' => 'Telefon']) @endif
 </p>

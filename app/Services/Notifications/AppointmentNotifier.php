@@ -2,6 +2,7 @@
 
 namespace App\Services\Notifications;
 
+use App\Jobs\SendSmsMessage;
 use App\Jobs\SendWhatsAppMessage;
 use App\Mail\AppointmentCancelledMail;
 use App\Mail\AppointmentConfirmedMail;
@@ -10,7 +11,7 @@ use App\Models\Appointment;
 use Illuminate\Support\Facades\Mail;
 
 /**
- * Randevu bildirimleri: WhatsApp + e-posta.
+ * Randevu bildirimleri: WhatsApp + SMS + e-posta.
  * Gonderimler kuyruga atilir; web istegini bloklamaz.
  */
 class AppointmentNotifier
@@ -19,12 +20,23 @@ class AppointmentNotifier
     {
         $business = $appointment->business;
         $customer = $appointment->customer;
+        $text = $this->confirmationText($appointment);
 
         if ($business->whatsapp_enabled && $customer->phone) {
             SendWhatsAppMessage::dispatch(
                 $business->id,
                 $customer->phone,
-                $this->confirmationText($appointment),
+                $text,
+                'appointment_confirmation',
+                $appointment->id,
+            );
+        }
+
+        if ($business->sms_enabled && $customer->phone) {
+            SendSmsMessage::dispatch(
+                $business->id,
+                $customer->phone,
+                $text,
                 'appointment_confirmation',
                 $appointment->id,
             );
@@ -41,12 +53,23 @@ class AppointmentNotifier
     {
         $business = $appointment->business;
         $customer = $appointment->customer;
+        $text = $this->reminderText($appointment);
 
         if ($business->whatsapp_enabled && $customer->phone) {
             SendWhatsAppMessage::dispatch(
                 $business->id,
                 $customer->phone,
-                $this->reminderText($appointment),
+                $text,
+                'appointment_reminder',
+                $appointment->id,
+            );
+        }
+
+        if ($business->sms_enabled && $customer->phone) {
+            SendSmsMessage::dispatch(
+                $business->id,
+                $customer->phone,
+                $text,
                 'appointment_reminder',
                 $appointment->id,
             );
@@ -63,12 +86,23 @@ class AppointmentNotifier
     {
         $business = $appointment->business;
         $customer = $appointment->customer;
+        $text = $this->cancellationText($appointment);
 
         if ($business->whatsapp_enabled && $customer->phone) {
             SendWhatsAppMessage::dispatch(
                 $business->id,
                 $customer->phone,
-                $this->cancellationText($appointment),
+                $text,
+                'appointment_cancelled',
+                $appointment->id,
+            );
+        }
+
+        if ($business->sms_enabled && $customer->phone) {
+            SendSmsMessage::dispatch(
+                $business->id,
+                $customer->phone,
+                $text,
                 'appointment_cancelled',
                 $appointment->id,
             );
@@ -79,28 +113,42 @@ class AppointmentNotifier
         }
     }
 
-    /** Tamamlanan randevu sonrasi degerlendirme daveti (yalnizca WhatsApp). */
+    /** Tamamlanan randevu sonrasi degerlendirme daveti. */
     public function ratingRequest(Appointment $appointment): void
     {
         $business = $appointment->business;
         $customer = $appointment->customer;
 
-        if (! $business->whatsapp_enabled || ! $customer->phone) {
+        if (! $customer->phone) {
             return;
         }
 
-        SendWhatsAppMessage::dispatch(
-            $business->id,
-            $customer->phone,
-            sprintf(
-                "Merhaba %s! %s ziyaretiniz için teşekkürler. 🙏\n\nDeneyiminizi 30 saniyede değerlendirir misiniz?\n%s",
-                $customer->name,
-                $business->name,
-                route('appointment.public.rate', $appointment->public_token),
-            ),
-            'rating_request',
-            $appointment->id,
+        $text = sprintf(
+            "Merhaba %s! %s ziyaretiniz için teşekkürler. 🙏\n\nDeneyiminizi 30 saniyede değerlendirir misiniz?\n%s",
+            $customer->name,
+            $business->name,
+            route('appointment.public.rate', $appointment->public_token),
         );
+
+        if ($business->whatsapp_enabled) {
+            SendWhatsAppMessage::dispatch(
+                $business->id,
+                $customer->phone,
+                $text,
+                'rating_request',
+                $appointment->id,
+            );
+        }
+
+        if ($business->sms_enabled) {
+            SendSmsMessage::dispatch(
+                $business->id,
+                $customer->phone,
+                $text,
+                'rating_request',
+                $appointment->id,
+            );
+        }
     }
 
     private function confirmationText(Appointment $a): string

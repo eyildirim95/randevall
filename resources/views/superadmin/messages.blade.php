@@ -7,6 +7,7 @@
                 <div class="card-header d-flex gap-2 flex-wrap">
                     <a href="{{ route('admin.messages.index') }}" class="btn btn-sm {{ !$filters['channel'] && !$filters['status'] ? 'btn-primary' : 'btn-light' }}">Tümü</a>
                     <a href="{{ route('admin.messages.index', ['channel' => 'whatsapp']) }}" class="btn btn-sm {{ $filters['channel'] === 'whatsapp' ? 'btn-primary' : 'btn-light' }}">WhatsApp</a>
+                    <a href="{{ route('admin.messages.index', ['channel' => 'sms']) }}" class="btn btn-sm {{ $filters['channel'] === 'sms' ? 'btn-primary' : 'btn-light' }}">SMS</a>
                     <a href="{{ route('admin.messages.index', ['channel' => 'email']) }}" class="btn btn-sm {{ $filters['channel'] === 'email' ? 'btn-primary' : 'btn-light' }}">E-posta</a>
                     <a href="{{ route('admin.messages.index', ['status' => 'failed']) }}" class="btn btn-sm {{ $filters['status'] === 'failed' ? 'btn-danger' : 'btn-light' }}">Başarısız</a>
                 </div>
@@ -28,9 +29,15 @@
                             <tr>
                                 <td>{{ $message->business?->name ?? 'Platform' }}</td>
                                 <td>
-                                    <span class="badge bg-soft-{{ $message->channel === 'whatsapp' ? 'success' : 'info' }} text-{{ $message->channel === 'whatsapp' ? 'success' : 'info' }}">
-                                        {{ $message->channel === 'whatsapp' ? 'WhatsApp' : 'E-posta' }}
-                                    </span>
+                                    @php
+                                        $channelMap = [
+                                            'whatsapp' => ['success', 'WhatsApp'],
+                                            'sms' => ['primary', 'SMS'],
+                                            'email' => ['info', 'E-posta'],
+                                        ];
+                                        [$color, $label] = $channelMap[$message->channel] ?? ['secondary', $message->channel];
+                                    @endphp
+                                    <span class="badge bg-soft-{{ $color }} text-{{ $color }}">{{ $label }}</span>
                                 </td>
                                 <td>{{ $message->recipient }}</td>
                                 <td><small>{{ $message->message_type }}</small></td>

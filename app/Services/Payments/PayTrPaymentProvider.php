@@ -28,10 +28,10 @@ class PayTrPaymentProvider implements PaymentProvider
         }
 
         $business = $payment->business;
-        $email = $business->email ?: 'info@bookibris.com';
+        $email = $business->email ?: 'info@randevall.com';
         $amountKurus = (int) round(((float) $payment->amount) * 100);
         $userBasket = base64_encode(json_encode([[
-            'BooKıbrıs Abonelik', number_format((float) $payment->amount, 2, '.', ''), 1,
+            config('app.name').' Abonelik', number_format((float) $payment->amount, 2, '.', ''), 1,
         ]]));
         $merchantOid = 'RSR'.$payment->id.'T'.time();
         $callbackUrl = route('payment.callback', $payment->token);

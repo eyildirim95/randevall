@@ -11,8 +11,8 @@
                     <div class="card-body row g-3">
                         <div class="col-md-6">
                             <label class="form-label">Bildirim E-postası</label>
-                            <input type="email" name="notification_email" class="form-control" value="{{ old('notification_email', $settings['notification_email']) }}" placeholder="admin@bookibris.com">
-                            <small class="text-muted">Demo talepleri buraya bildirilir.</small>
+                            <input type="email" name="notification_email" class="form-control" value="{{ old('notification_email', $settings['notification_email']) }}" placeholder="admin@randevall.com">
+                            <small class="text-muted">Sistem bildirimleri buraya gönderilir.</small>
                         </div>
                         <div class="col-md-3">
                             <label class="form-label">Landing Telefonu</label>
@@ -68,6 +68,34 @@
                 </div>
 
                 <div class="card">
+                    <div class="card-header"><h4 class="card-title mb-0">SMS / Verimor (Merkezi API)</h4></div>
+                    <div class="card-body row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Sağlayıcı</label>
+                            <select name="sms_provider" class="form-select">
+                                <option value="verimor" @selected($settings['sms_provider'] === 'verimor')>Verimor</option>
+                                <option value="log" @selected($settings['sms_provider'] === 'log')>Test (log)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Kullanıcı Adı</label>
+                            <input type="text" name="sms_username" class="form-control" maxlength="30" value="{{ old('sms_username', $settings['sms_username']) }}" placeholder="908501234567">
+                            <small class="text-muted">Verimor OİM'deki 12 haneli hesap numaranız.</small>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">API Şifresi</label>
+                            <input type="password" name="sms_password" class="form-control" maxlength="120" autocomplete="new-password"
+                                   placeholder="{{ $settings['sms_password_set'] ? '••••••• (değiştirmek için yazın)' : 'Verimor API şifresi' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Gönderici Başlığı</label>
+                            <input type="text" name="sms_source_addr" class="form-control" maxlength="11" value="{{ old('sms_source_addr', $settings['sms_source_addr']) }}" placeholder="RANDEVALL">
+                            <small class="text-muted">Verimor'da onaylı başlık olmalıdır.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
                     <div class="card-header"><h4 class="card-title mb-0">PayTR (Kredi Kartı)</h4></div>
                     <div class="card-body row g-3">
                         <div class="col-md-4">
@@ -88,7 +116,7 @@
                 <button class="btn btn-primary px-4 mb-3">Kaydet</button>
             </form>
 
-            {{-- Merkezi WhatsApp testi (ayri form) --}}
+            {{-- Merkezi WhatsApp testi --}}
             <div class="card">
                 <div class="card-header"><h4 class="card-title mb-0">Merkezi WhatsApp Testi</h4></div>
                 <div class="card-body">
@@ -99,6 +127,22 @@
                         </div>
                         <div class="col-4">
                             <button class="btn btn-soft-success w-100"><i class="ri-whatsapp-line me-1"></i>Test Gönder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {{-- Merkezi SMS testi --}}
+            <div class="card">
+                <div class="card-header"><h4 class="card-title mb-0">Merkezi SMS Testi (Verimor)</h4></div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('admin.settings.sms-test') }}" class="row g-2">
+                        @csrf
+                        <div class="col-8">
+                            <input type="tel" name="test_phone" class="form-control" required maxlength="30" placeholder="+90 5xx xxx xx xx">
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-soft-primary w-100"><i class="ri-message-2-line me-1"></i>Test SMS</button>
                         </div>
                     </form>
                 </div>

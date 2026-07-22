@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
     {
         // ── Super admin ─────────────────────────────────────────
         $admin = User::query()->firstOrCreate(
-            ['email' => 'admin@bookibris.com'],
-            ['name' => 'BooKıbrıs Admin', 'password' => Hash::make('admin123!')],
+            ['email' => 'admin@randevall.com'],
+            ['name' => 'Randevall Admin', 'password' => Hash::make('admin123!')],
         );
         $admin->forceFill(['is_super_admin' => true, 'email_verified_at' => now()])->save();
 
@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Tek kişilik işletmeler için',
                 'price_monthly' => 499, 'price_yearly' => 4990,
                 'max_staff' => 1, 'max_customers' => 0, 'max_appointments_per_month' => 200,
-                'whatsapp_quota_monthly' => 200, 'trial_days' => 14, 'sort_order' => 1,
+                'whatsapp_quota_monthly' => 200, 'trial_days' => 0, 'sort_order' => 1,
                 'features' => ['Online randevu linki', 'WhatsApp bildirimleri', 'Gelir-gider takibi'],
             ],
             [
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Büyüyen ekipler için', 'is_featured' => true,
                 'price_monthly' => 899, 'price_yearly' => 8990,
                 'max_staff' => 5, 'max_customers' => 0, 'max_appointments_per_month' => 0,
-                'whatsapp_quota_monthly' => 1000, 'trial_days' => 14, 'sort_order' => 2,
+                'whatsapp_quota_monthly' => 1000, 'trial_days' => 0, 'sort_order' => 2,
                 'features' => ['Sınırsız randevu', 'Sadık müşteri sistemi', 'Detaylı raporlar', 'Öncelikli destek'],
             ],
             [
@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Çok personelli salonlar için',
                 'price_monthly' => 1499, 'price_yearly' => 14990,
                 'max_staff' => 0, 'max_customers' => 0, 'max_appointments_per_month' => 0,
-                'whatsapp_quota_monthly' => 0, 'trial_days' => 14, 'sort_order' => 3,
+                'whatsapp_quota_monthly' => 0, 'trial_days' => 0, 'sort_order' => 3,
                 'features' => ['Sınırsız her şey', 'Özel kurulum desteği', 'Telefon desteği'],
             ],
         ];
@@ -63,27 +63,31 @@ class DatabaseSeeder extends Seeder
         }
 
         // ── Sistem ayarlari ─────────────────────────────────────
-        SystemSetting::set('notification_email', 'admin@bookibris.com');
+        SystemSetting::set('notification_email', 'admin@randevall.com');
 
         // Merkezi WhatsApp: gelistirmede log saglayicisi
         if (! SystemSetting::get('whatsapp_provider')) {
             SystemSetting::set('whatsapp_provider', 'log');
         }
 
-        // ── Demo isletme ────────────────────────────────────────
-        if (Business::query()->where('slug', 'demo-berber')->exists()) {
+        if (! SystemSetting::get('sms_provider')) {
+            SystemSetting::set('sms_provider', 'log');
+        }
+
+        // ── Örnek işletme ───────────────────────────────────────
+        if (Business::query()->where('slug', 'ornek-berber')->exists()) {
             return;
         }
 
         $business = new Business([
-            'name' => 'Demo Berber',
-            'slug' => 'demo-berber',
+            'name' => 'Örnek Berber',
+            'slug' => 'ornek-berber',
             'sector' => 'Berber',
             'phone' => '+90 533 000 00 00',
-            'email' => 'demo@bookibris.com',
-            'address' => 'Atatürk Caddesi No: 1',
-            'city' => 'Girne',
-            'description' => 'Girne\'nin merkezinde modern erkek kuaförü.',
+            'email' => 'ornek@randevall.com',
+            'address' => 'Bağdat Caddesi No: 1',
+            'city' => 'İstanbul',
+            'description' => 'İstanbul\'un merkezinde modern erkek kuaförü.',
             'whatsapp_enabled' => true,
             'auto_confirm_online' => false,
             'loyalty_enabled' => true,
@@ -92,12 +96,12 @@ class DatabaseSeeder extends Seeder
             'loyalty_reward_description' => 'Ücretsiz saç tıraşı',
         ]);
         $business->subscription_plan_id = SubscriptionPlan::query()->where('slug', 'profesyonel')->value('id');
-        $business->trial_ends_at = now()->addDays(14);
+        $business->trial_ends_at = null;
         $business->save();
 
         $owner = User::query()->firstOrCreate(
-            ['email' => 'demo@bookibris.com'],
-            ['name' => 'Demo İşletmeci', 'phone' => '+90 533 000 00 00', 'password' => Hash::make('demo123!')],
+            ['email' => 'ornek@randevall.com'],
+            ['name' => 'Örnek İşletmeci', 'phone' => '+90 533 000 00 00', 'password' => Hash::make('demo123!')],
         );
         $owner->forceFill(['email_verified_at' => now()])->save();
         $business->users()->syncWithoutDetaching([$owner->id => ['role' => BusinessRole::Owner->value]]);
@@ -221,7 +225,7 @@ class DatabaseSeeder extends Seeder
         // Ornek not
         $note = new Note([
             'title' => 'Hoş geldiniz!',
-            'content' => 'BooKıbrıs demo işletmesine hoş geldiniz. Bu panelden randevularınızı, müşterilerinizi ve gelir-giderinizi yönetebilirsiniz.',
+            'content' => 'Randevall örnek işletmesine hoş geldiniz. Bu panelden randevularınızı, müşterilerinizi ve gelir-giderinizi yönetebilirsiniz.',
             'color' => 'info',
             'is_pinned' => true,
         ]);

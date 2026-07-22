@@ -4,7 +4,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\Booking\PublicAppointmentController;
-use App\Http\Controllers\Landing\DemoRequestController;
 use App\Http\Controllers\Landing\LandingController;
 use App\Http\Controllers\Panel;
 use App\Http\Controllers\SuperAdmin;
@@ -16,9 +15,6 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::get('/', [LandingController::class, 'index'])->name('landing');
-Route::post('/demo-talebi', [DemoRequestController::class, 'store'])
-    ->middleware('throttle:5,10')
-    ->name('demo.store');
 
 /*
 |--------------------------------------------------------------------------
@@ -142,6 +138,7 @@ Route::middleware(['auth', 'superadmin'])
         Route::get('/isletmeler/{business}', [SuperAdmin\BusinessController::class, 'show'])->name('businesses.show');
         Route::get('/isletmeler/{business}/duzenle', [SuperAdmin\BusinessController::class, 'edit'])->name('businesses.edit');
         Route::put('/isletmeler/{business}', [SuperAdmin\BusinessController::class, 'update'])->name('businesses.update');
+        Route::post('/isletmeler/{business}/abonelik', [SuperAdmin\BusinessSubscriptionController::class, 'store'])->name('businesses.subscriptions.store');
         Route::post('/isletmeler/{business}/askiya-al', [SuperAdmin\BusinessController::class, 'suspend'])->name('businesses.suspend');
         Route::post('/isletmeler/{business}/aktif-et', [SuperAdmin\BusinessController::class, 'activate'])->name('businesses.activate');
         Route::delete('/isletmeler/{business}', [SuperAdmin\BusinessController::class, 'destroy'])->name('businesses.destroy');
@@ -159,10 +156,6 @@ Route::middleware(['auth', 'superadmin'])
         Route::get('/odemeler', [SuperAdmin\PaymentController::class, 'index'])->name('payments.index');
         Route::post('/odemeler/{payment}/onayla', [SuperAdmin\PaymentController::class, 'markPaid'])->name('payments.mark-paid');
 
-        // Demo talepleri
-        Route::get('/demo-talepleri', [SuperAdmin\DemoRequestController::class, 'index'])->name('demo-requests.index');
-        Route::put('/demo-talepleri/{demoRequest}', [SuperAdmin\DemoRequestController::class, 'update'])->name('demo-requests.update');
-
         // Duyurular
         Route::resource('/duyurular', SuperAdmin\AnnouncementController::class)
             ->parameters(['duyurular' => 'announcement'])
@@ -174,6 +167,7 @@ Route::middleware(['auth', 'superadmin'])
         Route::get('/ayarlar', [SuperAdmin\SettingsController::class, 'edit'])->name('settings.edit');
         Route::post('/ayarlar', [SuperAdmin\SettingsController::class, 'update'])->name('settings.update');
         Route::post('/ayarlar/whatsapp-test', [SuperAdmin\SettingsController::class, 'testWhatsApp'])->name('settings.whatsapp-test');
+        Route::post('/ayarlar/sms-test', [SuperAdmin\SettingsController::class, 'testSms'])->name('settings.sms-test');
 
         // Mesaj loglari
         Route::get('/mesajlar', [SuperAdmin\MessageLogController::class, 'index'])->name('messages.index');
@@ -244,6 +238,8 @@ Route::prefix('{business}')
                     ->parameters(['musteriler' => 'customer'])
                     ->names('customers');
                 Route::post('/musteriler/{customer}/puan', [Panel\CustomerController::class, 'adjustPoints'])->name('customers.points');
+                Route::post('/musteriler/{customer}/takip-notu', [Panel\CustomerController::class, 'storeRecord'])->name('customers.records.store');
+                Route::delete('/musteriler/{customer}/takip-notu/{record}', [Panel\CustomerController::class, 'destroyRecord'])->name('customers.records.destroy');
 
                 // Destek talepleri
                 Route::get('/destek', [Panel\TicketController::class, 'index'])->name('tickets.index');
@@ -305,6 +301,7 @@ Route::prefix('{business}')
                     Route::get('/ayarlar', [Panel\SettingsController::class, 'edit'])->name('settings.edit');
                     Route::post('/ayarlar', [Panel\SettingsController::class, 'update'])->name('settings.update');
                     Route::post('/ayarlar/whatsapp-test', [Panel\SettingsController::class, 'testWhatsApp'])->name('settings.whatsapp-test');
+                    Route::post('/ayarlar/sms-test', [Panel\SettingsController::class, 'testSms'])->name('settings.sms-test');
 
                     // Abonelik
                     Route::get('/abonelik', [Panel\SubscriptionController::class, 'index'])->name('subscription.index');

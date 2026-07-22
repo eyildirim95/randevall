@@ -20,8 +20,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 /**
- * Self-servis isletme kaydi: landing'den 2 dakikada isletme ac,
- * deneme suresiyle panele gir.
+ * Self-servis isletme kaydi: landing'den isletme ac, panele gir.
  */
 class RegisterController extends Controller
 {
@@ -66,7 +65,9 @@ class RegisterController extends Controller
                 'email' => $data['email'],
             ]);
             $business->subscription_plan_id = $plan?->id;
-            $business->trial_ends_at = now()->addDays($plan?->trial_days ?? 14);
+            $business->trial_ends_at = ($plan?->trial_days ?? config('legal.trial_days', 0)) > 0
+                ? now()->addDays($plan->trial_days)
+                : null;
             $business->save();
 
             // Varsayilan calisma saatleri: Pzt-Cmt 09:00-19:00, Pazar kapali

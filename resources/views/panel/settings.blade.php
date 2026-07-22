@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Şehir</label>
-                            <input type="text" name="city" class="form-control" maxlength="80" value="{{ old('city', $business->city) }}" placeholder="Lefkoşa, Girne...">
+                            <input type="text" name="city" class="form-control" maxlength="80" value="{{ old('city', $business->city) }}" placeholder="İstanbul, Ankara, İzmir...">
                         </div>
                         <div class="col-12">
                             <label class="form-label">Adres</label>
@@ -121,15 +121,21 @@
 
                 {{-- Bildirimler --}}
                 <div class="card">
-                    <div class="card-header"><h4 class="card-title mb-0">Bildirimler (WhatsApp &amp; E-posta)</h4></div>
+                    <div class="card-header"><h4 class="card-title mb-0">Bildirimler (WhatsApp, SMS &amp; E-posta)</h4></div>
                     <div class="card-body row g-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-check form-switch">
                                 <input type="checkbox" class="form-check-input" id="whatsapp_enabled" name="whatsapp_enabled" value="1" @checked(old('whatsapp_enabled', $business->whatsapp_enabled))>
                                 <label class="form-check-label" for="whatsapp_enabled">WhatsApp bildirimleri</label>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input" id="sms_enabled" name="sms_enabled" value="1" @checked(old('sms_enabled', $business->sms_enabled))>
+                                <label class="form-check-label" for="sms_enabled">SMS bildirimleri</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-check form-switch">
                                 <input type="checkbox" class="form-check-input" id="email_notifications_enabled" name="email_notifications_enabled" value="1" @checked(old('email_notifications_enabled', $business->email_notifications_enabled))>
                                 <label class="form-check-label" for="email_notifications_enabled">E-posta bildirimleri</label>
@@ -148,10 +154,10 @@
                         <div class="col-12">
                             <div class="alert alert-info py-2 mb-0">
                                 <i class="ri-information-line me-1"></i>
-                                WhatsApp gönderimi BooKıbrıs'un merkezi altyapısı üzerinden yapılır; API kurulumu gerekmez.
+                                WhatsApp ve SMS gönderimi Randevall'un merkezi altyapısı üzerinden yapılır; API kurulumu gerekmez.
                                 @if($business->plan && $business->plan->whatsapp_quota_monthly > 0)
-                                    Planınıza dahil aylık kota: <strong>{{ $business->plan->whatsapp_quota_monthly }}</strong> mesaj
-                                    (bu ay kullanılan: <strong>{{ app(\App\Services\Messaging\WhatsAppManager::class)->usedThisMonth($business) }}</strong>).
+                                    Planınıza dahil aylık mesaj kotası: <strong>{{ $business->plan->whatsapp_quota_monthly }}</strong>
+                                    (bu ay kullanılan: <strong>{{ \App\Services\Messaging\MessageQuota::usedThisMonth($business) }}</strong>).
                                 @endif
                             </div>
                         </div>
@@ -165,7 +171,7 @@
         </div>
     </form>
 
-    {{-- WhatsApp test (ayri form) --}}
+    {{-- Mesaj testleri --}}
     <div class="row">
         <div class="col-xl-6">
             <div class="card">
@@ -178,6 +184,22 @@
                         </div>
                         <div class="col-4">
                             <button class="btn btn-soft-success w-100"><i class="ri-whatsapp-line me-1"></i>Test Gönder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header"><h4 class="card-title mb-0">SMS Test</h4></div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('panel.settings.sms-test', $business) }}" class="row g-2">
+                        @csrf
+                        <div class="col-8">
+                            <input type="tel" name="test_phone" class="form-control" required maxlength="30" placeholder="05xx xxx xx xx">
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-soft-primary w-100"><i class="ri-message-2-line me-1"></i>Test SMS</button>
                         </div>
                     </form>
                 </div>

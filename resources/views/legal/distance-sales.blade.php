@@ -35,9 +35,7 @@
 <h2>6. Cayma Hakkı</h2>
 <p>
     Mesafeli sözleşmelerde dijital içerik/hizmetlerde, hizmetin ifasına tüketicinin onayıyla başlanması
-    halinde cayma hakkı sınırlanabilir. Buna rağmen, <strong>{{ config('legal.trial_days', 14) }} günlük ücretsiz
-    deneme</strong> süresi boyunca herhangi bir ödeme alınmaz; memnun kalmazsanız ödemeden vazgeçebilirsiniz.
-    Ödeme sonrası talepler için @include('legal.partials.field', ['key' => 'email', 'label' => 'E-posta']) ile iletişime geçin.
+    halinde cayma hakkı sınırlanabilir. Ödeme sonrası talepler için @include('legal.partials.field', ['key' => 'email', 'label' => 'E-posta']) ile iletişime geçin.
 </p>
 
 <h2>7. İptal ve İade</h2>

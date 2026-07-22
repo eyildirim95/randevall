@@ -37,8 +37,9 @@
                             </select>
                         </div>
                         <div class="col-12">
-                            <label class="form-label">Notlar</label>
-                            <textarea name="notes" class="form-control" rows="3" maxlength="2000" placeholder="Tercihler, alerjiler, özel notlar...">{{ old('notes', $customer->notes) }}</textarea>
+                            <label class="form-label">Genel not</label>
+                            <textarea name="notes" class="form-control" rows="2" maxlength="2000" placeholder="Alerji, tercih edilen saat, kısa hatırlatmalar...">{{ old('notes', $customer->notes) }}</textarea>
+                            <small class="text-muted">Detaylı gelişim ve işlem takibi için müşteri profilindeki takip notlarını kullanın.</small>
                         </div>
                         <div class="col-12">
                             <div class="form-check">

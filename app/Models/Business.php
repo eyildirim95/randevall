@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\SubscriptionStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,7 @@ class Business extends Model
         'loyalty_enabled', 'loyalty_points_per_visit', 'loyalty_redeem_threshold', 'loyalty_reward_description',
         'birthday_greeting_enabled',
         'whatsapp_enabled',
+        'sms_enabled',
         'email_notifications_enabled', 'reminder_hours_before',
     ];
 
@@ -39,6 +41,7 @@ class Business extends Model
             'loyalty_enabled' => 'bool',
             'birthday_greeting_enabled' => 'bool',
             'whatsapp_enabled' => 'bool',
+            'sms_enabled' => 'bool',
             'email_notifications_enabled' => 'bool',
             'is_active' => 'bool',
             'trial_ends_at' => 'datetime',
@@ -145,7 +148,14 @@ class Business extends Model
             return true;
         }
 
-        return $this->plan_expires_at !== null && $this->plan_expires_at->isFuture();
+        if ($this->plan_expires_at !== null && $this->plan_expires_at->isFuture()) {
+            return true;
+        }
+
+        return $this->subscriptions()
+            ->where('status', SubscriptionStatus::Active)
+            ->where('ends_at', '>', now())
+            ->exists();
     }
 
     public function isOperational(): bool

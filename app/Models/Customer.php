@@ -38,6 +38,11 @@ class Customer extends Model
         return $this->hasMany(LoyaltyTransaction::class);
     }
 
+    public function records(): HasMany
+    {
+        return $this->hasMany(CustomerRecord::class)->latest();
+    }
+
     /** Telefonu normalize ederek sakla (bosluk/tire temizle). */
     public function setPhoneAttribute(?string $value): void
     {

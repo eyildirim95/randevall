@@ -3,7 +3,7 @@
 
 @section('content')
 <p>
-    @include('legal.partials.field', ['key' => 'company', 'label' => 'Şirket Ünvanı']) ("BooKıbrıs") olarak
+    @include('legal.partials.field', ['key' => 'company', 'label' => 'Şirket Ünvanı']) ("Randevall") olarak
     kişisel verilerinizin güvenliğine önem veriyoruz. Bu metin, 6698 sayılı Kişisel Verilerin Korunması
     Kanunu ("KVKK") kapsamında veri sorumlusu sıfatıyla kişisel verilerinizin nasıl işlendiğini açıklar.
 </p>
@@ -20,7 +20,7 @@
     <li><strong>Kimlik &amp; iletişim:</strong> ad-soyad, telefon, e-posta.</li>
     <li><strong>İşletme bilgileri:</strong> işletme adı, adres, sektör (kayıt olan işletmeler için).</li>
     <li><strong>Randevu verileri:</strong> hizmet, tarih/saat, personel, notlar.</li>
-    <li><strong>Ödeme verileri:</strong> abonelik/ödeme kayıtları. Kart bilgileri BooKıbrıs tarafından
+    <li><strong>Ödeme verileri:</strong> abonelik/ödeme kayıtları. Kart bilgileri Randevall tarafından
         saklanmaz; ödeme altyapısı sağlayıcısı (ör. PayTR) üzerinden işlenir.</li>
     <li><strong>Teknik veriler:</strong> IP adresi, oturum ve kullanım kayıtları (güvenlik ve loglama).</li>
 </ul>
@@ -40,7 +40,7 @@
 <h2>5. Veri İşleyen (Müşteri Verileri)</h2>
 <p>
     İşletmelerin platforma girdiği son-müşteri verileri bakımından <strong>veri sorumlusu ilgili işletmedir</strong>;
-    BooKıbrıs bu verileri işletme adına işleyen (veri işleyen) sıfatıyla saklar ve işler. İşletmeler,
+    Randevall bu verileri işletme adına işleyen (veri işleyen) sıfatıyla saklar ve işler. İşletmeler,
     müşterilerinden gerekli aydınlatma ve onayları almakla yükümlüdür.
 </p>
 

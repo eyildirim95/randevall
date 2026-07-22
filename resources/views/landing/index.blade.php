@@ -2,24 +2,24 @@
 <html lang="tr" data-bs-theme="dark" style="scroll-behavior: smooth">
 <head>
     <meta charset="utf-8"/>
-    <title>BooKıbrıs — İşletmeniz İçin Akıllı Randevu Sistemi | Kıbrıs</title>
+    <title>Randevall — İşletmeniz İçin Akıllı Randevu Sistemi | Türkiye</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="Berber, kuaför, güzellik salonu ve tüm randevulu işletmeler için online randevu, WhatsApp hatırlatma, gelir-gider takibi ve müşteri yönetimi. Kıbrıs'ın randevu sistemi."/>
+    <meta name="description" content="Berber, kuaför, güzellik salonu ve tüm randevulu işletmeler için online randevu, WhatsApp hatırlatma, gelir-gider takibi ve müşteri yönetimi. Türkiye'nin randevu sistemi."/>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <link rel="canonical" href="{{ url('/') }}"/>
     @include('layouts.partials.favicons')
 
     {{-- Sosyal paylasim (Open Graph / Twitter) --}}
     <meta property="og:type" content="website"/>
-    <meta property="og:site_name" content="BooKıbrıs"/>
-    <meta property="og:title" content="BooKıbrıs — İşletmeniz İçin Akıllı Randevu Sistemi"/>
-    <meta property="og:description" content="Online randevu, WhatsApp hatırlatma, gelir-gider takibi ve müşteri yönetimi tek panelde. 14 gün ücretsiz deneyin."/>
+    <meta property="og:site_name" content="Randevall"/>
+    <meta property="og:title" content="Randevall — İşletmeniz İçin Akıllı Randevu Sistemi"/>
+    <meta property="og:description" content="Online randevu, WhatsApp hatırlatma, gelir-gider takibi ve müşteri yönetimi tek panelde. Hemen kayıt olun."/>
     <meta property="og:url" content="{{ url('/') }}"/>
     <meta property="og:image" content="{{ asset('images/og-cover.png') }}"/>
     <meta property="og:locale" content="tr_TR"/>
     <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="BooKıbrıs — İşletmeniz İçin Akıllı Randevu Sistemi"/>
-    <meta name="twitter:description" content="Online randevu, WhatsApp hatırlatma ve müşteri yönetimi tek panelde. 14 gün ücretsiz."/>
+    <meta name="twitter:title" content="Randevall — İşletmeniz İçin Akıllı Randevu Sistemi"/>
+    <meta name="twitter:description" content="Online randevu, WhatsApp hatırlatma ve müşteri yönetimi tek panelde."/>
     <meta name="twitter:image" content="{{ asset('images/og-cover.png') }}"/>
     @vite(['resources/scss/app.scss', 'resources/scss/icons.scss'])
     <style>
@@ -286,7 +286,7 @@
 {{-- ── Navbar ──────────────────────────────────────────────── --}}
 <nav class="lp-nav py-3" id="lp-nav">
     <div class="container d-flex align-items-center justify-content-between">
-        <a class="fs-24 fw-bold text-white text-decoration-none d-inline-flex align-items-center" href="#"><img src="{{ asset('favicon-32.png') }}" height="32" class="me-2" alt="BooKıbrıs">Boo<span style="color:var(--lp-primary-2)">Kıbrıs</span></a>
+        @include('layouts.partials.brand-logo', ['href' => '#', 'textClass' => 'text-white', 'accentClass' => '', 'accentStyle' => 'color:var(--lp-primary-2)'])
 
         <div class="d-none d-lg-flex align-items-center gap-4">
             <a class="nav-link" href="#ozellikler">Özellikler</a>
@@ -297,7 +297,7 @@
 
         <div class="d-flex align-items-center gap-2">
             <a href="{{ route('login') }}" class="btn btn-ghost btn-sm px-3 py-2">Giriş Yap</a>
-            <a href="{{ route('register') }}" class="btn btn-glow btn-sm px-3 py-2">Ücretsiz Dene</a>
+            <a href="{{ route('register') }}" class="btn btn-glow btn-sm px-3 py-2">Kayıt Ol</a>
         </div>
     </div>
 </nav>
@@ -312,7 +312,7 @@
     <div class="container position-relative">
         <div class="text-center mx-auto" style="max-width: 780px">
             <span class="hero-badge reveal visible mb-4">
-                <span class="pulse"></span> Kıbrıs'ın randevu sistemi — 14 gün ücretsiz
+                <span class="pulse"></span> Türkiye'nin randevu sistemi
             </span>
             <h1 class="display-3 fw-bold mt-4 mb-3 gradient-text" style="letter-spacing: -.03em; line-height: 1.08">
                 Randevularınız cebinizde,<br>işletmeniz kontrol altında
@@ -325,7 +325,7 @@
                 <a href="{{ route('register') }}" class="btn btn-glow btn-lg px-4 py-3">Hemen Başla <i class="ri-arrow-right-line ms-1"></i></a>
                 <a href="#ozellikler" class="btn btn-ghost btn-lg px-4 py-3">Özellikleri Keşfet</a>
             </div>
-            <p class="fs-13 lp-muted mt-3">Kredi kartı gerekmez · Kurulum ücreti yok · İstediğiniz zaman iptal</p>
+            <p class="fs-13 lp-muted mt-3">Anında kurulum · Taahhüt yok · İstediğiniz zaman iptal</p>
         </div>
 
         {{-- Dashboard mockup --}}
@@ -354,7 +354,7 @@
                     <span class="mockup-dot" style="background:#ff5f57"></span>
                     <span class="mockup-dot" style="background:#febc2e"></span>
                     <span class="mockup-dot" style="background:#28c840"></span>
-                    <span class="fs-12 lp-muted ms-2">bookibris.com/demo-berber/panel/takvim</span>
+                    <span class="fs-12 lp-muted ms-2">randevall.com/ornek-berber/panel/takvim</span>
                 </div>
                 <div class="p-3 p-md-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -424,8 +424,8 @@
                 <div class="lp-muted">Daha az unutulan randevu</div>
             </div>
             <div class="col-md-3 col-6 reveal reveal-d3">
-                <div class="stat-value"><span data-count="14">0</span><span class="plus">gün</span></div>
-                <div class="lp-muted">Ücretsiz deneme</div>
+                <div class="stat-value"><span data-count="100">0</span><span class="plus">+</span></div>
+                <div class="lp-muted">Mutlu işletme</div>
             </div>
         </div>
     </div>
@@ -477,7 +477,7 @@
         <div class="row g-5 text-center">
             @php
                 $steps = [
-                    ['title' => 'Demo talep edin', 'text' => 'Formu doldurun, aynı gün sizi arayalım; işletmenizi birlikte kuralım.'],
+                    ['title' => 'Kayıt olun', 'text' => 'İşletme bilgilerinizi girin, hesabınızı birkaç dakikada oluşturun.'],
                     ['title' => 'Hizmetlerinizi ekleyin', 'text' => 'Hizmetler, ücretler, personel, çalışma saatleri... 15 dakikada hazır.'],
                     ['title' => 'Linkinizi paylaşın', 'text' => "Instagram bio'nuza koyun, müşteriler 7/24 kendi randevusunu alsın."],
                 ];
@@ -500,7 +500,7 @@
         <div class="text-center mb-5 reveal">
             <div class="sec-label mb-2">FİYATLANDIRMA</div>
             <h2 class="sec-title display-6">Basit ve şeffaf</h2>
-            <p class="lp-muted">Tüm planlarda {{ $plans->first()?->trial_days ?? 14 }} gün ücretsiz deneme. Gizli ücret yok.</p>
+            <p class="lp-muted">Şeffaf fiyatlandırma. Gizli ücret yok.</p>
         </div>
         <div class="row g-4 justify-content-center">
             @forelse($plans as $i => $plan)
@@ -523,7 +523,7 @@
                                 <li class="py-1"><i class="ri-check-line price-check me-2"></i><span class="lp-muted">{{ $feature }}</span></li>
                             @endforeach
                         </ul>
-                        <a href="{{ route('register') }}" class="btn {{ $plan->is_featured ? 'btn-glow' : 'btn-ghost' }} w-100 py-2">Ücretsiz Dene</a>
+                        <a href="{{ route('register') }}" class="btn {{ $plan->is_featured ? 'btn-glow' : 'btn-ghost' }} w-100 py-2">Hemen Başla</a>
                     </div>
                 </div>
             @empty
@@ -543,10 +543,10 @@
         <div class="accordion lp-accordion reveal" id="faq">
             @php
                 $faqs = [
-                    ['q' => 'Kurulum için teknik bilgi gerekiyor mu?', 'a' => 'Hayır. Demo talebinizden sonra işletmenizi biz kuruyoruz; size sadece hizmet ve personel bilgilerinizi girmek kalıyor. Dilerseniz onu da birlikte yapıyoruz.'],
+                    ['q' => 'Kurulum için teknik bilgi gerekiyor mu?', 'a' => 'Hayır. Kayıt olduktan sonra panelden hizmet, personel ve çalışma saatlerinizi eklemeniz yeterli. Adım adım yönlendirme ile birkaç dakikada hazırsınız.'],
                     ['q' => 'WhatsApp mesajları nasıl gönderiliyor?', 'a' => 'Resmi WhatsApp Business API üzerinden gönderilir. Kendi numaranızla, onay ve hatırlatma mesajları otomatik gider.'],
-                    ['q' => 'Müşterilerim nasıl randevu alacak?', 'a' => 'Size özel linkiniz olur (örn. bookibris.com/isletmeniz). Bu linki Instagram, Google ve WhatsApp durumunuzda paylaşırsınız; müşteri hizmet, personel ve saati seçip randevusunu alır.'],
-                    ['q' => 'Deneme süresi bitince ne olur?', 'a' => 'Dilediğiniz planı seçip kartla veya havale/EFT ile ödersiniz. Verileriniz aynen korunur.'],
+                    ['q' => 'Müşterilerim nasıl randevu alacak?', 'a' => 'Size özel linkiniz olur (örn. randevall.com/isletmeniz). Bu linki Instagram, Google ve WhatsApp durumunuzda paylaşırsınız; müşteri hizmet, personel ve saati seçip randevusunu alır.'],
+                    ['q' => 'Abonelik nasıl çalışır?', 'a' => 'Planınızı seçip kartla veya havale/EFT ile ödersiniz. Verileriniz güvenle saklanır.'],
                     ['q' => 'Verilerim güvende mi?', 'a' => 'Her işletmenin verisi birbirinden tamamen izole tutulur, şifreler ve API anahtarları şifrelenerek saklanır. Verileriniz sadece size aittir.'],
                     ['q' => 'İptal edersem ne olur?', 'a' => 'Taahhüt yok. İstediğiniz zaman iptal edebilirsiniz; dönem sonuna kadar sistem çalışmaya devam eder.'],
                 ];
@@ -567,70 +567,16 @@
     </div>
 </section>
 
-{{-- ── Demo formu ──────────────────────────────────────────── --}}
-<section id="demo" class="py-5 position-relative">
+{{-- ── Kayıt CTA ───────────────────────────────────────────── --}}
+<section id="kayit" class="py-5 position-relative">
     <div class="orb" style="width: 380px; height: 380px; background: #4c2b95; bottom: -80px; right: 6%; opacity: .35"></div>
     <div class="container py-4" style="max-width: 760px">
         <div class="glass-panel p-4 p-md-5 reveal">
-            <div class="position-relative">
-                <div class="text-center mb-4">
-                    <div class="sec-label mb-2">ÜCRETSİZ DEMO</div>
-                    <h2 class="sec-title display-6">Bugün deneyin</h2>
-                    <p class="lp-muted mb-0">Formu doldurun, aynı gün dönüş yapalım. 14 gün boyunca tüm özellikler ücretsiz.</p>
-                </div>
-
-                @if(session('demo_success'))
-                    <div class="alert alert-success text-center">
-                        <i class="ri-checkbox-circle-line me-1"></i>{{ session('demo_success') }}
-                    </div>
-                @endif
-
-                @if($errors->any())
-                    <div class="alert alert-danger">
-                        @foreach($errors->all() as $error)
-                            <div>{{ $error }}</div>
-                        @endforeach
-                    </div>
-                @endif
-
-                <form method="POST" action="{{ route('demo.store') }}" class="row g-3">
-                    @csrf
-                    {{-- Honeypot: botlar doldurur, insanlar gormez --}}
-                    <input type="text" name="website" value="" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-                    <div class="col-md-6">
-                        <label class="form-label lp-muted">Adınız Soyadınız <span class="text-danger">*</span></label>
-                        <input type="text" name="name" class="form-control py-2" required maxlength="120" value="{{ old('name') }}">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label lp-muted">Telefon <span class="text-danger">*</span></label>
-                        <input type="tel" name="phone" class="form-control py-2" required maxlength="30" placeholder="+90 5xx xxx xx xx" value="{{ old('phone') }}">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label lp-muted">İşletme Adı</label>
-                        <input type="text" name="business_name" class="form-control py-2" maxlength="150" value="{{ old('business_name') }}">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label lp-muted">Sektör</label>
-                        <select name="sector" class="form-select py-2">
-                            <option value="">Seçin...</option>
-                            @foreach(['Berber', 'Kuaför', 'Güzellik Salonu', 'Klinik / Sağlık', 'Spor / PT', 'Diğer'] as $sector)
-                                <option value="{{ $sector }}" @selected(old('sector') === $sector)>{{ $sector }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label lp-muted">E-posta</label>
-                        <input type="email" name="email" class="form-control py-2" maxlength="190" value="{{ old('email') }}">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label lp-muted">Mesajınız</label>
-                        <input type="text" name="message" class="form-control py-2" maxlength="1000" placeholder="İsteğe bağlı" value="{{ old('message') }}">
-                    </div>
-                    <div class="col-12 d-grid mt-4">
-                        <button class="btn btn-glow btn-lg py-3">Demo Talep Et <i class="ri-arrow-right-line ms-1"></i></button>
-                    </div>
-                </form>
+            <div class="position-relative text-center">
+                <div class="sec-label mb-2">HEMEN BAŞLAYIN</div>
+                <h2 class="sec-title display-6">İşletmenizi bugün dijitalleştirin</h2>
+                <p class="lp-muted mb-4">Kayıt olun, hizmetlerinizi ekleyin ve randevu linkinizi paylaşmaya başlayın.</p>
+                <a href="{{ route('register') }}" class="btn btn-glow btn-lg px-5 py-3">Kayıt Ol <i class="ri-arrow-right-line ms-1"></i></a>
             </div>
         </div>
     </div>
@@ -641,8 +587,8 @@
     <div class="container">
         <div class="row g-4 align-items-center">
             <div class="col-md-6">
-                <a class="fs-24 fw-bold text-white text-decoration-none d-inline-flex align-items-center" href="#"><img src="{{ asset('favicon-32.png') }}" height="32" class="me-2" alt="BooKıbrıs">Boo<span style="color:var(--lp-primary-2)">Kıbrıs</span></a>
-                <p class="lp-muted mb-0 mt-2 fs-14">İşletmeniz için akıllı randevu sistemi — Kıbrıs 🇨🇾</p>
+                @include('layouts.partials.brand-logo', ['href' => '#', 'textClass' => 'text-white', 'accentClass' => '', 'accentStyle' => 'color:var(--lp-primary-2)'])
+                <p class="lp-muted mb-0 mt-2 fs-14">İşletmeniz için akıllı randevu sistemi — Türkiye 🇹🇷</p>
             </div>
             <div class="col-md-6 text-md-end">
                 <div class="d-flex gap-4 justify-content-md-end justify-content-start mb-2 flex-wrap">
@@ -656,7 +602,7 @@
                     <a href="{{ route('legal.distance-sales') }}" class="lp-muted text-decoration-none fs-13">Mesafeli Satış</a>
                     <a href="{{ route('legal.cookies') }}" class="lp-muted text-decoration-none fs-13">Çerez Politikası</a>
                 </div>
-                <p class="lp-muted fs-13 mb-0">© {{ date('Y') }} BooKıbrıs. Tüm hakları saklıdır.</p>
+                <p class="lp-muted fs-13 mb-0">© {{ date('Y') }} Randevall. Tüm hakları saklıdır.</p>
             </div>
         </div>
     </div>

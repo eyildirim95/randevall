@@ -59,7 +59,7 @@ class WhatsAppManager
             return SendResult::fail('whatsapp_disabled');
         }
 
-        if ($this->quotaExceeded($business)) {
+        if (MessageQuota::exceeded($business)) {
             $log->update(['status' => 'failed', 'provider_response' => 'quota_exceeded']);
 
             return SendResult::fail('quota_exceeded');
@@ -99,26 +99,14 @@ class WhatsAppManager
         return $result;
     }
 
-    /** Bu ay gonderilen mesaj sayisi plan kotasini asti mi? (0 = sinirsiz) */
     public function quotaExceeded(Business $business): bool
     {
-        $quota = (int) ($business->plan?->whatsapp_quota_monthly ?? 0);
-
-        if ($quota <= 0) {
-            return false;
-        }
-
-        return $this->usedThisMonth($business) >= $quota;
+        return MessageQuota::exceeded($business);
     }
 
     public function usedThisMonth(Business $business): int
     {
-        return MessageLog::query()
-            ->where('business_id', $business->id)
-            ->where('channel', 'whatsapp')
-            ->where('status', 'sent')
-            ->where('created_at', '>=', now()->startOfMonth())
-            ->count();
+        return MessageQuota::usedThisMonth($business);
     }
 
     /** API anahtari sistem ayarlarinda sifreli tutulur. */

@@ -41,7 +41,7 @@
 
             @if($customer->notes)
                 <div class="card">
-                    <div class="card-header"><h4 class="card-title mb-0">Notlar</h4></div>
+                    <div class="card-header"><h4 class="card-title mb-0">Genel Not</h4></div>
                     <div class="card-body">{{ $customer->notes }}</div>
                 </div>
             @endif
@@ -95,6 +95,50 @@
         </div>
 
         <div class="col-xl-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Gelişim &amp; İşlem Takibi</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('panel.customers.records.store', [$business, $customer]) }}" class="mb-4">
+                        @csrf
+                        <label class="form-label">Yeni takip notu</label>
+                        <textarea name="body" class="form-control" rows="4" required maxlength="5000"
+                                  placeholder="Örn: 26 numaralı dişe dolgu yapıldı · Tansiyon ilacı dozu güncellendi · Matematikte konu tekrarı tamamlandı · Saç rengi #5/71 uygulandı">{{ old('body') }}</textarea>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <small class="text-muted">Tarihli kayıtlar kronolojik olarak saklanır. Tüm sektörlerde kullanılabilir.</small>
+                            <button type="submit" class="btn btn-primary btn-sm">Not Ekle</button>
+                        </div>
+                    </form>
+
+                    @forelse($customer->records as $record)
+                        <div class="border rounded p-3 mb-3 {{ $loop->first ? 'border-primary border-opacity-25 bg-light bg-opacity-50' : '' }}">
+                            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                                <div>
+                                    <span class="fw-medium">{{ $record->created_at->translatedFormat('d F Y, H:i') }}</span>
+                                    @if($record->author)
+                                        <small class="text-muted d-block">{{ $record->author->name }}</small>
+                                    @endif
+                                </div>
+                                @if(auth()->user()->canManage($business) || auth()->user()->isSuperAdmin())
+                                    <form method="POST" action="{{ route('panel.customers.records.destroy', [$business, $customer, $record]) }}"
+                                          onsubmit="return confirm('Bu takip notu silinsin mi?')">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-soft-danger" title="Sil"><i class="ri-delete-bin-line"></i></button>
+                                    </form>
+                                @endif
+                            </div>
+                            <div class="text-break" style="white-space: pre-wrap;">{{ $record->body }}</div>
+                        </div>
+                    @empty
+                        <div class="text-center text-muted py-4">
+                            <i class="ri-file-list-3-line fs-24 d-block mb-2"></i>
+                            Henüz takip notu yok. Gelişme, tedavi veya işlem detaylarını yukarıdan ekleyebilirsiniz.
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+
             <div class="card">
                 <div class="card-header"><h4 class="card-title mb-0">Randevu Geçmişi</h4></div>
                 <div class="table-responsive">

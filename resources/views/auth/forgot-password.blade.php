@@ -5,9 +5,7 @@
         <div class="card auth-card">
             <div class="card-body px-3 py-5">
                 <div class="mx-auto mb-4 text-center auth-logo">
-                    <a href="{{ route('landing') }}" class="fw-bold fs-28 text-decoration-none">
-                        <img src="{{ asset('favicon-32.png') }}" height="34" class="me-2 align-middle" alt=""><span class="text-dark">Boo</span><span class="text-primary">Kıbrıs</span>
-                    </a>
+                    @include('layouts.partials.brand-logo', ['href' => route('landing'), 'class' => 'fs-28', 'size' => 34])
                 </div>
 
                 <h2 class="fw-bold text-uppercase text-center fs-18">Şifre Sıfırlama</h2>

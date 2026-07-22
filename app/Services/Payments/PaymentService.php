@@ -82,15 +82,86 @@ class PaymentService
             $subscription = $payment->subscription;
 
             if ($subscription) {
-                $subscription->forceFill(['status' => SubscriptionStatus::Active->value])->save();
-
-                $business = $payment->business;
-                $business->forceFill([
-                    'subscription_plan_id' => $subscription->subscription_plan_id,
-                    'plan_expires_at' => $subscription->ends_at,
-                    'trial_ends_at' => null,
-                ])->save();
+                $this->activateSubscription($subscription, $payload);
             }
         });
+    }
+
+    /**
+     * Super admin: odeme bekletmeden manuel abonelik tanimlar.
+     *
+     * @param  array{starts_at?: \Carbon\CarbonInterface, ends_at?: \Carbon\CarbonInterface, amount?: float|string, note?: string, granted_by?: int}  $options
+     */
+    public function grantManualSubscription(
+        Business $business,
+        SubscriptionPlan $plan,
+        string $period,
+        array $options = [],
+    ): Subscription {
+        return DB::transaction(function () use ($business, $plan, $period, $options) {
+            $startsAt = isset($options['starts_at'])
+                ? \Carbon\Carbon::parse($options['starts_at'])
+                : now();
+
+            $price = $options['amount'] ?? ($period === 'yearly' ? $plan->price_yearly : $plan->price_monthly);
+
+            $endsAt = isset($options['ends_at'])
+                ? \Carbon\Carbon::parse($options['ends_at'])
+                : ($period === 'yearly' ? $startsAt->copy()->addYear() : $startsAt->copy()->addMonth());
+
+            $this->expireActiveSubscriptions($business);
+
+            $subscription = Subscription::create([
+                'business_id' => $business->id,
+                'subscription_plan_id' => $plan->id,
+                'period' => $period,
+                'price' => $price,
+                'currency' => $plan->currency,
+                'starts_at' => $startsAt,
+                'ends_at' => $endsAt,
+                'status' => SubscriptionStatus::Active->value,
+            ]);
+
+            $payment = new Payment([
+                'business_id' => $business->id,
+                'subscription_id' => $subscription->id,
+                'provider' => 'manual',
+                'amount' => $price,
+                'currency' => $plan->currency,
+            ]);
+            $payment->forceFill([
+                'status' => 'paid',
+                'paid_at' => now(),
+                'payload' => array_filter([
+                    'granted_manually' => true,
+                    'granted_by' => $options['granted_by'] ?? null,
+                    'note' => $options['note'] ?? null,
+                ]),
+            ])->save();
+
+            $this->activateSubscription($subscription, ['granted_manually' => true]);
+
+            return $subscription->fresh(['plan']);
+        });
+    }
+
+    private function expireActiveSubscriptions(Business $business): void
+    {
+        Subscription::query()
+            ->where('business_id', $business->id)
+            ->where('status', SubscriptionStatus::Active->value)
+            ->update(['status' => SubscriptionStatus::Expired->value]);
+    }
+
+    private function activateSubscription(Subscription $subscription, array $payload = []): void
+    {
+        $subscription->forceFill(['status' => SubscriptionStatus::Active->value])->save();
+
+        $business = $subscription->business;
+        $business->forceFill([
+            'subscription_plan_id' => $subscription->subscription_plan_id,
+            'plan_expires_at' => $subscription->ends_at,
+            'trial_ends_at' => null,
+        ])->save();
     }
 }

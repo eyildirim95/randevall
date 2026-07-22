@@ -27,15 +27,17 @@
                         <div class="alert alert-info text-center mb-3">Bu tarihte uygun saat yok. Başka bir gün deneyin.</div>
                     @else
                         <p class="fw-medium mb-2">{{ $date->translatedFormat('d F Y l') }} için uygun saatler:</p>
-                        <div class="d-flex flex-wrap gap-2 mb-3">
+                        <div class="booking-slots mb-3">
                             @foreach($slots as $slot)
-                                <form method="POST" action="{{ route('appointment.public.reschedule.store', $appointment->public_token) }}"
-                                      onsubmit="return confirm('Randevunuz {{ $date->format('d.m.Y') }} {{ $slot }} saatine taşınsın mı?')">
-                                    @csrf
-                                    <input type="hidden" name="date" value="{{ $date->toDateString() }}">
-                                    <input type="hidden" name="time" value="{{ $slot }}">
-                                    <button class="btn btn-outline-primary btn-sm">{{ $slot }}</button>
-                                </form>
+                                <div class="booking-slot-item">
+                                    <form method="POST" action="{{ route('appointment.public.reschedule.store', $appointment->public_token) }}"
+                                          onsubmit="return confirm('Randevunuz {{ $date->format('d.m.Y') }} {{ $slot }} saatine taşınsın mı?')">
+                                        @csrf
+                                        <input type="hidden" name="date" value="{{ $date->toDateString() }}">
+                                        <input type="hidden" name="time" value="{{ $slot }}">
+                                        <button type="submit" class="btn btn-outline-primary booking-slot-btn w-100">{{ $slot }}</button>
+                                    </form>
+                                </div>
                             @endforeach
                         </div>
                     @endif

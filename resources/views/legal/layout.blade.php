@@ -31,7 +31,7 @@
 <body>
     <nav class="legal-nav">
         <div class="legal-wrap">
-            <a href="{{ route('landing') }}" class="brand" style="display:inline-flex;align-items:center;gap:8px"><img src="{{ asset('favicon-32.png') }}" height="28" alt="">Boo<span>Kıbrıs</span></a>
+            @include('layouts.partials.brand-logo', ['href' => route('landing'), 'class' => 'fs-22', 'size' => 28])
         </div>
     </nav>
 

@@ -1,17 +1,15 @@
-@extends('layouts.auth', ['title' => 'Ücretsiz Kayıt'])
+@extends('layouts.auth', ['title' => 'Kayıt Ol'])
 
 @section('content')
     <div class="col-xl-6 col-lg-8">
         <div class="card auth-card">
             <div class="card-body px-3 py-4">
                 <div class="mx-auto mb-3 text-center auth-logo">
-                    <a href="{{ route('landing') }}" class="fw-bold fs-28 text-decoration-none">
-                        <img src="{{ asset('favicon-32.png') }}" height="34" class="me-2 align-middle" alt=""><span class="text-dark">Boo</span><span class="text-primary">Kıbrıs</span>
-                    </a>
+                    @include('layouts.partials.brand-logo', ['href' => route('landing'), 'class' => 'fs-28', 'size' => 34])
                 </div>
 
-                <h2 class="fw-bold text-center fs-18">İşletmenizi Ücretsiz Açın</h2>
-                <p class="text-muted text-center mt-1 mb-4">14 gün tüm özellikler ücretsiz · Kredi kartı gerekmez</p>
+                <h2 class="fw-bold text-center fs-18">İşletmenizi Kaydedin</h2>
+                <p class="text-muted text-center mt-1 mb-4">Birkaç dakikada hesabınızı oluşturun ve panele giriş yapın.</p>
 
                 <div class="px-2 px-md-4">
                     <form method="POST" action="{{ route('register.store') }}" class="row g-3">
