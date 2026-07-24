@@ -4,6 +4,12 @@
     <style>
         #panel-calendar .fc-event { cursor: pointer; }
         #panel-calendar .fc-timegrid-slot { height: 2.2em; }
+        #panel-calendar .fc-timegrid-slot-lane,
+        #panel-calendar .fc-daygrid-day-frame,
+        #panel-calendar .fc-list-day-cushion { cursor: pointer; }
+        #panel-calendar .fc-daygrid-day:not(.fc-day-past) .fc-daygrid-day-frame:hover {
+            background: rgba(96, 74, 227, .06);
+        }
     </style>
 @endsection
 
@@ -28,7 +34,8 @@
                         <button type="button" class="btn btn-sm btn-primary" id="btn-new-appointment">
                             <i class="ri-add-line me-1"></i>Randevu Oluştur
                         </button>
-                        <div class="ms-auto d-flex gap-2 flex-wrap">
+                        <div class="ms-auto d-flex gap-2 flex-wrap align-items-center">
+                            <small class="text-muted d-none d-md-inline">Boş bir saate tıklayarak randevu oluşturabilirsiniz</small>
                             @foreach($staffList as $staff)
                                 <span class="badge" style="background-color: {{ $staff->color }}">{{ $staff->name }}</span>
                             @endforeach
@@ -55,7 +62,7 @@
 @section('modal')
     {{-- Yeni randevu modali (takvimde bos alana tiklaninca acilir) --}}
     <div class="modal fade" id="new-appointment-modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
             <div class="modal-content">
                 <form id="new-appointment-form">
                     <div class="modal-header">

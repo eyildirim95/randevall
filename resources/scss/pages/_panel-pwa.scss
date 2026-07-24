@@ -134,6 +134,15 @@ body.panel-pwa-active {
 
         #panel-calendar {
             min-height: 65vh;
+            touch-action: manipulation;
+        }
+
+        .modal {
+            z-index: 1060;
+        }
+
+        .modal-backdrop {
+            z-index: 1055;
         }
 
         .fc .fc-toolbar {

@@ -31,7 +31,7 @@
         sidebarToggle?.click();
     });
 
-    // Takvim sayfasinda FAB / alt nav randevu → modal ac
+    // Takvim sayfasinda alt nav randevu → modal ac
     const newAppointmentNav = document.getElementById('panel-mobile-new-appointment');
     newAppointmentNav?.addEventListener('click', (event) => {
         if (!window.location.pathname.includes('/panel/takvim')) {
@@ -39,6 +39,10 @@
         }
 
         event.preventDefault();
+        if (typeof window.openPanelAppointmentModal === 'function') {
+            window.openPanelAppointmentModal(new Date(), { keepCustomer: false });
+            return;
+        }
         document.getElementById('btn-new-appointment')?.click();
     });
 
