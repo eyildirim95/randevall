@@ -15,7 +15,6 @@ use App\Models\SubscriptionPlan;
 use App\Models\SystemSetting;
 use App\Models\Transaction;
 use App\Models\User;
-use App\Models\WorkingHour;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -108,8 +107,7 @@ class DatabaseSeeder extends Seeder
 
         // Calisma saatleri: Pzt-Cmt 09:00-19:00 (13-14 mola), Pazar kapali
         foreach (range(0, 6) as $dow) {
-            WorkingHour::query()->create([
-                'business_id' => $business->id,
+            $business->workingHours()->create([
                 'day_of_week' => $dow,
                 'is_closed' => $dow === 0,
                 'start_time' => $dow === 0 ? null : '09:00',

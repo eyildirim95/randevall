@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Business;
 use App\Models\SubscriptionPlan;
 use App\Models\User;
-use App\Models\WorkingHour;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -64,8 +63,7 @@ class BusinessController extends Controller
 
             // Varsayilan calisma saatleri: Pzt-Cmt 09:00-19:00, Pazar kapali
             foreach (range(0, 6) as $dow) {
-                WorkingHour::query()->create([
-                    'business_id' => $business->id,
+                $business->workingHours()->create([
                     'staff_id' => null,
                     'day_of_week' => $dow,
                     'is_closed' => $dow === 0,
