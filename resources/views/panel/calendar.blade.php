@@ -38,12 +38,12 @@
                     <div id="panel-calendar"
                          data-events-url="{{ route('panel.calendar.events', $business) }}"
                          data-store-url="{{ route('panel.appointments.store', $business) }}"
-                         data-customer-lookup-url="{{ route('panel.customers.lookup-phone', $business) }}"
+                         data-customer-lookup-url="{{ $customerLookupUrl }}"
                          data-move-url-template="{{ route('panel.appointments.move', [$business, '__ID__']) }}"
                          data-status-url-template="{{ route('panel.appointments.status', [$business, '__ID__']) }}"
                          data-show-url-template="{{ route('panel.appointments.show', [$business, '__ID__']) }}"
                          data-slot-interval="{{ $business->slot_interval_minutes }}"
-                         @if($prefillCustomer)
+                         @if(! empty($prefillCustomer))
                          data-prefill-customer='@json(["id" => $prefillCustomer->id, "name" => $prefillCustomer->name, "phone" => $prefillCustomer->phone])'
                          @endif></div>
                 </div>

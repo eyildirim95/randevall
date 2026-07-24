@@ -37,6 +37,7 @@ class CalendarController extends Controller
             'services' => Service::query()->active()->ordered()->get(),
             'lockedStaffId' => $lockedStaffId,
             'prefillCustomer' => $prefillCustomer,
+            'customerLookupUrl' => url($business->slug.'/panel/musteriler/telefon-ara'),
         ]);
     }
 
