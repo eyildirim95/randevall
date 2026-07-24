@@ -1,0 +1,160 @@
+//
+// Tenant panel PWA — mobil alt nav, standalone mod, guvenli alan
+//
+
+.panel-mobile-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1040;
+    display: none;
+    align-items: stretch;
+    justify-content: space-around;
+    gap: .15rem;
+    padding: .35rem .5rem calc(.35rem + env(safe-area-inset-bottom));
+    background: var(--#{$prefix}topbar-bg, #fff);
+    border-top: 1px solid var(--#{$prefix}border-color, rgba(0, 0, 0, .08));
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, .06);
+
+    &__item {
+        flex: 1 1 0;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: .15rem;
+        padding: .35rem .15rem;
+        border: 0;
+        background: transparent;
+        color: var(--#{$prefix}secondary-color, #687d92);
+        text-decoration: none;
+        font-size: .68rem;
+        line-height: 1.1;
+        border-radius: .65rem;
+        transition: color .15s ease, background-color .15s ease;
+
+        i {
+            font-size: 1.35rem;
+            line-height: 1;
+        }
+
+        &.is-active,
+        &:hover,
+        &:focus {
+            color: $primary;
+            background: rgba($primary, .08);
+        }
+
+        &--primary {
+            color: #fff;
+            background: $primary;
+            max-width: 4.25rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 16px rgba($primary, .35);
+
+            i {
+                font-size: 1.5rem;
+            }
+
+            span {
+                font-weight: 600;
+            }
+
+            &.is-active,
+            &:hover,
+            &:focus {
+                color: #fff;
+                background: shade-color($primary, 8%);
+            }
+        }
+    }
+}
+
+.panel-pwa-install {
+    position: fixed;
+    left: .75rem;
+    right: .75rem;
+    bottom: calc(4.75rem + env(safe-area-inset-bottom));
+    z-index: 1035;
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .75rem;
+        padding: .75rem 1rem;
+        border-radius: .85rem;
+        background: var(--#{$prefix}body-bg, #fff);
+        border: 1px solid rgba($primary, .15);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+    }
+}
+
+body.panel-pwa-active {
+    @include media-breakpoint-down(lg) {
+        .panel-mobile-nav {
+            display: flex;
+        }
+
+        .page-content {
+            padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+        }
+
+        .footer {
+            display: none;
+        }
+
+        .page-title-box {
+            margin-bottom: 1rem;
+        }
+
+        .page-title-box h4 {
+            font-size: 1.1rem;
+        }
+
+        .card-body {
+            padding: 1rem;
+        }
+
+        .table-responsive {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .btn,
+        .form-control,
+        .form-select {
+            min-height: 2.75rem;
+        }
+
+        .btn-sm {
+            min-height: 2.25rem;
+        }
+
+        #panel-calendar {
+            min-height: 65vh;
+        }
+
+        .fc .fc-toolbar {
+            flex-wrap: wrap;
+            gap: .5rem;
+        }
+
+        .fc .fc-toolbar-title {
+            font-size: 1rem;
+        }
+
+        .modal-dialog {
+            margin: .75rem;
+        }
+    }
+
+    &.panel-pwa-standalone {
+        @include media-breakpoint-down(lg) {
+            .topbar {
+                padding-top: env(safe-area-inset-top);
+            }
+        }
+    }
+}

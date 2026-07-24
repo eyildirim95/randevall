@@ -217,6 +217,11 @@ Route::prefix('{business}')
             ->group(function () {
                 Route::get('/', [Panel\DashboardController::class, 'index'])->name('dashboard');
 
+                // PWA (tenant panel)
+                Route::get('/manifest.webmanifest', [Panel\PwaController::class, 'manifest'])->name('pwa.manifest');
+                Route::get('/sw.js', [Panel\PwaController::class, 'serviceWorker'])->name('pwa.sw');
+                Route::get('/cevrimdisi', [Panel\PwaController::class, 'offline'])->name('pwa.offline');
+
                 // Bildirimler
                 Route::post('/bildirimler/okundu', [Panel\NotificationController::class, 'markAllRead'])->name('notifications.read');
 

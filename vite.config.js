@@ -16,6 +16,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/config.js',
                 'resources/js/layout.js',
+                'resources/js/panel-pwa.js',
 
                 // page js
                 'resources/js/pages/panel-calendar.js',
