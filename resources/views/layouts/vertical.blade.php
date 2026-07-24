@@ -17,7 +17,7 @@
     @if($isPanelPwa)
         class="panel-pwa-body"
         data-pwa-scope="{{ url($business->slug.'/panel/') }}"
-        data-pwa-sw-url="{{ route('panel.pwa.sw', $business) }}"
+        data-pwa-sw-url="{{ url($business->slug.'/panel/sw.js') }}"
     @endif
 >
 
@@ -53,7 +53,7 @@
 @include('layouts.partials.footer-scripts')
 
 @if($isPanelPwa)
-    @vite(['resources/js/panel-pwa.js'])
+    {!! app(\App\Support\SafeVite::class)->tags(['resources/js/panel-pwa.js']) !!}
 @endif
 
 </body>

@@ -1,5 +1,5 @@
 {{-- Tenant panel PWA meta --}}
-<link rel="manifest" href="{{ route('panel.pwa.manifest', $business) }}">
+<link rel="manifest" href="{{ url($business->slug.'/panel/manifest.webmanifest') }}">
 <meta name="theme-color" content="{{ config('pwa.theme_color') }}">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
