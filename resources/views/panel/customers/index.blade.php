@@ -52,7 +52,8 @@
                                         <span class="badge bg-soft-success text-success">Aktif</span>
                                     @endif
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center text-nowrap">
+                                    <a href="{{ route('panel.calendar', [$business, 'customer_id' => $customer->id]) }}" class="btn btn-sm btn-soft-success" title="Randevu oluştur"><i class="ri-calendar-check-line"></i></a>
                                     <a href="{{ route('panel.customers.show', [$business, $customer]) }}" class="btn btn-sm btn-soft-primary"><i class="ri-eye-line"></i></a>
                                     <a href="{{ route('panel.customers.edit', [$business, $customer]) }}" class="btn btn-sm btn-soft-secondary"><i class="ri-pencil-line"></i></a>
                                 </td>

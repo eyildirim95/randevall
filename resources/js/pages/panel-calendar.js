@@ -16,6 +16,12 @@ if (el) {
     const newModal = new bootstrap.Modal(newModalEl);
     const detailModal = new bootstrap.Modal(detailModalEl);
 
+    const customerIdInput = document.getElementById('na-customer-id');
+    const customerNameInput = document.getElementById('na-customer-name');
+    const customerPhoneInput = document.getElementById('na-customer-phone');
+    const customerMatchHint = document.getElementById('na-customer-match');
+    const newAppointmentBtn = document.getElementById('btn-new-appointment');
+
     const urlFor = (template, id) => template.replace('__ID__', id);
 
     async function jsonFetch(url, options = {}) {
@@ -69,8 +75,14 @@ if (el) {
         },
 
         // Bos alana tikla → yeni randevu modali
-        dateClick: (info) => openNewModal(info.date),
-        select: (info) => openNewModal(info.start),
+        dateClick: (info) => {
+            clearCustomerPrefill();
+            openNewModal(info.date);
+        },
+        select: (info) => {
+            clearCustomerPrefill();
+            openNewModal(info.start);
+        },
 
         // Surukle-birak → tasi
         eventDrop: (info) => moveEvent(info),
@@ -91,6 +103,64 @@ if (el) {
         return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:00`;
     }
 
+    function roundToNextSlot(date) {
+        const interval = parseInt(el.dataset.slotInterval || '15', 10);
+        const rounded = new Date(date);
+        rounded.setSeconds(0, 0);
+        const minutes = rounded.getMinutes();
+        const remainder = minutes % interval;
+        if (remainder !== 0) {
+            rounded.setMinutes(minutes + (interval - remainder));
+        }
+        if (rounded <= date) {
+            rounded.setMinutes(rounded.getMinutes() + interval);
+        }
+        return rounded;
+    }
+
+    function setCustomerPrefill(customer) {
+        customerIdInput.value = customer.id;
+        customerNameInput.value = customer.name;
+        customerPhoneInput.value = customer.phone;
+        customerNameInput.readOnly = true;
+        customerPhoneInput.readOnly = true;
+        customerMatchHint.textContent = `Kayıtlı müşteri: ${customer.name}`;
+        customerMatchHint.classList.remove('d-none');
+        customerMatchHint.classList.remove('text-danger');
+        customerMatchHint.classList.add('text-success');
+    }
+
+    function clearCustomerPrefill() {
+        customerIdInput.value = '';
+        customerNameInput.readOnly = false;
+        customerPhoneInput.readOnly = false;
+        customerMatchHint.textContent = '';
+        customerMatchHint.classList.add('d-none');
+        customerMatchHint.classList.remove('text-success', 'text-danger');
+    }
+
+    async function lookupCustomerByPhone(phone) {
+        if (!phone || phone.length < 10 || customerIdInput.value) return;
+
+        const params = new URLSearchParams({ phone });
+        const response = await fetch(`${el.dataset.customerLookupUrl}?${params}`, {
+            headers: { Accept: 'application/json' },
+        });
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+
+        if (data.found) {
+            setCustomerPrefill(data.customer);
+        } else {
+            customerIdInput.value = '';
+            customerMatchHint.textContent = 'Yeni müşteri olarak kaydedilecek.';
+            customerMatchHint.classList.remove('d-none', 'text-success');
+            customerMatchHint.classList.add('text-muted');
+        }
+    }
+
     function openNewModal(date) {
         if (date < new Date(Date.now() - 24 * 3600 * 1000)) return; // gecmise randevu acma
 
@@ -104,6 +174,35 @@ if (el) {
 
         document.getElementById('new-appointment-error').classList.add('d-none');
         newModal.show();
+    }
+
+    customerPhoneInput.addEventListener('blur', () => {
+        if (!customerPhoneInput.readOnly) {
+            lookupCustomerByPhone(customerPhoneInput.value.trim());
+        }
+    });
+
+    customerPhoneInput.addEventListener('input', () => {
+        if (customerIdInput.value) {
+            clearCustomerPrefill();
+        }
+    });
+
+    if (newAppointmentBtn) {
+        newAppointmentBtn.addEventListener('click', () => {
+            clearCustomerPrefill();
+            openNewModal(roundToNextSlot(new Date()));
+        });
+    }
+
+    if (el.dataset.prefillCustomer) {
+        try {
+            const customer = JSON.parse(el.dataset.prefillCustomer);
+            openNewModal(roundToNextSlot(new Date()));
+            setCustomerPrefill(customer);
+        } catch (_) {
+            // ignore invalid json
+        }
     }
 
     // Tekrar sayisi yalnizca tekrar secilince aktif
@@ -132,6 +231,7 @@ if (el) {
             const data = await jsonFetch(el.dataset.storeUrl, { method: 'POST', body: JSON.stringify(payload) });
             newModal.hide();
             form.reset();
+            clearCustomerPrefill();
             repeatCount.disabled = true;
             calendar.refetchEvents();
 

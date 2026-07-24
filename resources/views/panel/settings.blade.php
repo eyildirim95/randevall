@@ -145,12 +145,6 @@
                             <label class="form-label">Hatırlatma (saat önce)</label>
                             <input type="number" name="reminder_hours_before" class="form-control" min="0" max="168" value="{{ old('reminder_hours_before', $business->reminder_hours_before) }}">
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-check form-switch mt-4">
-                                <input type="checkbox" class="form-check-input" id="birthday_greeting_enabled" name="birthday_greeting_enabled" value="1" @checked(old('birthday_greeting_enabled', $business->birthday_greeting_enabled))>
-                                <label class="form-check-label" for="birthday_greeting_enabled">Doğum günü kutlama mesajı 🎂</label>
-                            </div>
-                        </div>
                         <div class="col-12">
                             <div class="alert alert-info py-2 mb-0">
                                 <i class="ri-information-line me-1"></i>
@@ -170,6 +164,33 @@
             </div>
         </div>
     </form>
+
+    {{-- Hesap --}}
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header"><h4 class="card-title mb-0">Hesabınız</h4></div>
+                <div class="card-body">
+                    <p class="mb-2"><strong>{{ auth()->user()->name }}</strong><br><span class="text-muted">{{ auth()->user()->email }}</span></p>
+                    @if (auth()->user()->hasVerifiedEmail())
+                        <div class="alert alert-success py-2 mb-0">
+                            <i class="ri-checkbox-circle-line me-1"></i> E-posta adresiniz doğrulandı.
+                        </div>
+                    @else
+                        <div class="alert alert-warning py-2 mb-3">
+                            <i class="ri-mail-check-line me-1"></i>
+                            E-posta adresinizi henüz doğrulamadınız. Güvenlik için lütfen doğrulayın.
+                        </div>
+                        <form method="POST" action="{{ route('verification.send') }}" class="d-flex flex-wrap gap-2">
+                            @csrf
+                            <button class="btn btn-sm btn-warning">Doğrulama e-postasını gönder</button>
+                            <a href="{{ route('verification.notice') }}" class="btn btn-sm btn-light">Doğrulama sayfası</a>
+                        </form>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{-- Mesaj testleri --}}
     <div class="row">

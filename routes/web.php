@@ -234,6 +234,7 @@ Route::prefix('{business}')
                 Route::delete('/randevular/{appointment}', [Panel\AppointmentController::class, 'destroy'])->name('appointments.destroy');
 
                 // Musteriler
+                Route::get('/musteriler/telefon-ara', [Panel\CustomerController::class, 'lookupByPhone'])->name('customers.lookup-phone');
                 Route::resource('/musteriler', Panel\CustomerController::class)
                     ->parameters(['musteriler' => 'customer'])
                     ->names('customers');

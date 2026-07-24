@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Business;
 use App\Models\CalendarClosure;
+use App\Models\Customer;
 use App\Models\Service;
 use App\Models\Staff;
 use Carbon\Carbon;
@@ -22,11 +23,20 @@ class CalendarController extends Controller
         // Personel rolu yalnizca kendi takvimini gorur
         $lockedStaffId = $user->isStaffOnly($business) ? $user->staffIdIn($business) : null;
 
+        $prefillCustomer = null;
+
+        if ($request->filled('customer_id')) {
+            $prefillCustomer = Customer::query()
+                ->whereKey($request->integer('customer_id'))
+                ->first(['id', 'name', 'phone']);
+        }
+
         return view('panel.calendar', [
             'business' => $business,
             'staffList' => Staff::query()->active()->ordered()->get(),
             'services' => Service::query()->active()->ordered()->get(),
             'lockedStaffId' => $lockedStaffId,
+            'prefillCustomer' => $prefillCustomer,
         ]);
     }
 

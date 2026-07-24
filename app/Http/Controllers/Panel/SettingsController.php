@@ -44,12 +44,11 @@ class SettingsController extends Controller
 
             'whatsapp_enabled' => ['nullable', 'boolean'],
             'sms_enabled' => ['nullable', 'boolean'],
-            'birthday_greeting_enabled' => ['nullable', 'boolean'],
             'email_notifications_enabled' => ['nullable', 'boolean'],
             'reminder_hours_before' => ['required', 'integer', 'between:0,168'],
         ]);
 
-        foreach (['online_booking_enabled', 'auto_confirm_online', 'loyalty_enabled', 'whatsapp_enabled', 'sms_enabled', 'birthday_greeting_enabled', 'email_notifications_enabled'] as $flag) {
+        foreach (['online_booking_enabled', 'auto_confirm_online', 'loyalty_enabled', 'whatsapp_enabled', 'sms_enabled', 'email_notifications_enabled'] as $flag) {
             $data[$flag] = $request->boolean($flag);
         }
 

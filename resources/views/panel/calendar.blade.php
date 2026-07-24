@@ -25,7 +25,10 @@
                         @if($lockedStaffId)
                             <span class="badge bg-soft-info text-info">Kendi takviminizi görüntülüyorsunuz</span>
                         @endif
-                        <div class="ms-auto d-flex gap-2">
+                        <button type="button" class="btn btn-sm btn-primary" id="btn-new-appointment">
+                            <i class="ri-add-line me-1"></i>Randevu Oluştur
+                        </button>
+                        <div class="ms-auto d-flex gap-2 flex-wrap">
                             @foreach($staffList as $staff)
                                 <span class="badge" style="background-color: {{ $staff->color }}">{{ $staff->name }}</span>
                             @endforeach
@@ -35,10 +38,14 @@
                     <div id="panel-calendar"
                          data-events-url="{{ route('panel.calendar.events', $business) }}"
                          data-store-url="{{ route('panel.appointments.store', $business) }}"
+                         data-customer-lookup-url="{{ route('panel.customers.lookup-phone', $business) }}"
                          data-move-url-template="{{ route('panel.appointments.move', [$business, '__ID__']) }}"
                          data-status-url-template="{{ route('panel.appointments.status', [$business, '__ID__']) }}"
                          data-show-url-template="{{ route('panel.appointments.show', [$business, '__ID__']) }}"
-                         data-slot-interval="{{ $business->slot_interval_minutes }}"></div>
+                         data-slot-interval="{{ $business->slot_interval_minutes }}"
+                         @if($prefillCustomer)
+                         data-prefill-customer='@json(["id" => $prefillCustomer->id, "name" => $prefillCustomer->name, "phone" => $prefillCustomer->phone])'
+                         @endif></div>
                 </div>
             </div>
         </div>
@@ -88,6 +95,8 @@
 
                         <hr>
 
+                        <input type="hidden" name="customer_id" id="na-customer-id" value="">
+
                         <div class="mb-2">
                             <label class="form-label">Müşteri Adı <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="customer_name" id="na-customer-name" required maxlength="120" placeholder="Ad Soyad">
@@ -95,6 +104,7 @@
                         <div class="mb-2">
                             <label class="form-label">Telefon <span class="text-danger">*</span></label>
                             <input type="tel" class="form-control" name="customer_phone" id="na-customer-phone" required maxlength="30" placeholder="05xx xxx xx xx">
+                            <small class="text-muted d-none" id="na-customer-match"></small>
                         </div>
                         <div class="mb-2">
                             <label class="form-label">Not</label>

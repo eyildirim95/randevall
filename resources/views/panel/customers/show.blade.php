@@ -33,6 +33,7 @@
                     </div>
 
                     <div class="d-flex gap-2 justify-content-center mt-3">
+                        <a href="{{ route('panel.calendar', [$business, 'customer_id' => $customer->id]) }}" class="btn btn-sm btn-primary"><i class="ri-calendar-check-line me-1"></i>Randevu Oluştur</a>
                         <a href="{{ route('panel.customers.edit', [$business, $customer]) }}" class="btn btn-sm btn-soft-primary"><i class="ri-pencil-line me-1"></i>Düzenle</a>
                         <a href="https://wa.me/{{ preg_replace('/\D/', '', \App\Services\Messaging\PhoneNumber::e164($customer->phone)) }}" target="_blank" class="btn btn-sm btn-soft-success"><i class="ri-whatsapp-line me-1"></i>WhatsApp</a>
                     </div>

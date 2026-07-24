@@ -35,7 +35,8 @@
                         <div class="col-md-3 d-flex gap-2">
                             <button type="submit" class="btn btn-sm btn-primary">Filtrele</button>
                             <a href="{{ route('panel.appointments.index', $business) }}" class="btn btn-sm btn-light">Sıfırla</a>
-                            <a href="{{ route('panel.calendar', $business) }}" class="btn btn-sm btn-soft-primary ms-auto"><i class="ri-calendar-2-line me-1"></i>Takvim</a>
+                            <a href="{{ route('panel.calendar', $business) }}" class="btn btn-sm btn-primary ms-auto"><i class="ri-add-line me-1"></i>Randevu Oluştur</a>
+                            <a href="{{ route('panel.calendar', $business) }}" class="btn btn-sm btn-soft-primary"><i class="ri-calendar-2-line me-1"></i>Takvim</a>
                         </div>
                     </form>
                 </div>

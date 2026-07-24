@@ -7,6 +7,8 @@ use App\Models\Business;
 use App\Models\Customer;
 use App\Models\CustomerRecord;
 use App\Services\Loyalty\LoyaltyService;
+use App\Services\Messaging\PhoneNumber;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -35,6 +37,19 @@ class CustomerController extends Controller
 
     public function store(Business $business, Request $request): RedirectResponse
     {
+        if ($request->filled('phone')) {
+            $normalizedPhone = PhoneNumber::e164((string) $request->input('phone'));
+            $request->merge(['phone' => $normalizedPhone]);
+
+            $existing = Customer::query()->where('phone', $normalizedPhone)->first();
+
+            if ($existing) {
+                return redirect()
+                    ->route('panel.customers.show', [$business, $existing])
+                    ->with('success', 'Bu telefon numarası zaten kayıtlı; mevcut müşteri profiline yönlendirildiniz.');
+            }
+        }
+
         $data = $this->validated($business, $request);
 
         // Plan bazli musteri limiti (0 = sinirsiz)
@@ -54,6 +69,28 @@ class CustomerController extends Controller
         return redirect()
             ->route('panel.customers.show', [$business, $customer])
             ->with('success', 'Müşteri eklendi.');
+    }
+
+    /** Takvim / randevu formu icin telefon ile musteri arama. */
+    public function lookupByPhone(Business $business, Request $request): JsonResponse
+    {
+        $request->validate(['phone' => ['required', 'string', 'max:30']]);
+
+        $phone = PhoneNumber::e164((string) $request->query('phone'));
+        $customer = Customer::query()->where('phone', $phone)->first();
+
+        if (! $customer) {
+            return response()->json(['found' => false]);
+        }
+
+        return response()->json([
+            'found' => true,
+            'customer' => [
+                'id' => $customer->id,
+                'name' => $customer->name,
+                'phone' => $customer->phone,
+            ],
+        ]);
     }
 
     public function show(Business $business, Customer $customer): View
