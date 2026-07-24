@@ -79,6 +79,6 @@ class PanelPwaTest extends TestCase
             ->assertOk()
             ->assertSee('manifest.webmanifest', false)
             ->assertSee('panel-mobile-nav', false)
-            ->assertSee('panel-pwa.js', false);
+            ->assertSee('panel-pwa', false);
     }
 }

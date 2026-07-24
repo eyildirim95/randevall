@@ -2,7 +2,6 @@
 
 namespace App\Support;
 
-use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\HtmlString;
 
 /**
@@ -20,13 +19,22 @@ class SafeVite
             return new HtmlString('');
         }
 
-        $available = array_values(array_filter($entries, fn (string $entry) => isset($manifest[$entry])));
+        $html = [];
 
-        if ($available === []) {
-            return new HtmlString('');
+        foreach ($entries as $entry) {
+            $file = $manifest[$entry]['file'] ?? null;
+
+            if (! is_string($file) || $file === '') {
+                continue;
+            }
+
+            $html[] = sprintf(
+                '<script type="module" src="%s"></script>',
+                e(asset('build/'.$file))
+            );
         }
 
-        return new HtmlString(Vite::useManifestFilename('build/manifest.json')->withEntryPoints($available)->toHtml());
+        return new HtmlString(implode("\n", $html));
     }
 
     private function manifest(): ?array
